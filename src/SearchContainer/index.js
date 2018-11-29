@@ -20,11 +20,12 @@ class SearchContainer extends Component {
 	}
 	render(){
 		console.log(this.state.search);
+		const message = 'Search ' + this.props.placeholder + ' here...';
 		return(
 
 			<div>
 				<Form onSubmit={this.handleSubmit}>
-          			<Input icon='search' onChange={this.handleChange} type="text" value={this.state.search} name='search' placeholder="search movies here"/>
+          			<Input icon='search' onChange={this.handleChange} type="text" value={this.state.search} name='search' placeholder={message}/>
           			<Button type="submit">Search</Button>
 
       			</Form>

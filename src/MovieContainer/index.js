@@ -27,9 +27,11 @@ class MovieContainer extends Component {
 	getResults = async (search) => {
 		const query = search;
 		this.fetchMovies(query).then((movies) => {
-			this.setState({
-				movies: movies.data
+			if(movies){
+				this.setState({
+					movies: movies.data
 			})
+			}
 		})
 	}
 	render(){ 
@@ -57,7 +59,7 @@ class MovieContainer extends Component {
 		})
 		return(
 			<div>
-				<SearchContainer getResults={this.getResults}/>
+				<SearchContainer placeholder='movies' getResults={this.getResults}/>
 				{moviePosters}
 			</div>
 			)

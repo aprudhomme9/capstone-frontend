@@ -1,0 +1,12 @@
+.back {
+	display: flex;
+	align-content: left;
+	text-align: left;
+	align-items: left;
+}
+
+.card {
+	display: grid;
+	grid-column-start: 2;
+	margin-bottom: 35px;
+}

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Card, Image, Button, Grid} from 'semantic-ui-react';
+import './styles.css';
 class DisplayShow extends Component{
 	constructor(){
 		super()
@@ -7,8 +8,10 @@ class DisplayShow extends Component{
 	render(){
 		return(
 			<div>
-				<Grid container columns={1} text-align='center' vertical='middle'>
-					<Grid.Column>
+				<div className='back'>
+					<Button className='back' onClick={this.props.toggleView}>Back</Button>
+				</div>
+				<div className='card'>
 					<Card height="600" width="500">
 	   					<Image height="400" width="300"src={this.props.show.imageUrl} />
 	   					<Card.Content>
@@ -21,12 +24,10 @@ class DisplayShow extends Component{
 	      					<p>Actors: {this.props.show.actors}</p>
 	    				</Card.Content>
 	 				</Card>
-	 				</Grid.Column>
-	 			</Grid>	
+	 			</div>
  				<Button>Favorite</Button>
       			<Button>Add to Watchlist</Button>
       			<Button>Recommend</Button>			
-				<Button onClick={this.props.toggleView}>Back</Button>
 			</div>
 
 

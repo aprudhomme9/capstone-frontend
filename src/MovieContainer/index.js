@@ -22,7 +22,7 @@ class MovieContainer extends Component {
 	render(){ 
 		return(
 			<div>
-				{this.state.showMovie ? <DisplayMovie movie={this.state.movieToDisplay} toggleView={this.toggleView} /> :
+				{this.state.showMovie ? <DisplayMovie user={this.props.user} movie={this.state.movieToDisplay} toggleView={this.toggleView} /> :
 
 					<MovieList toggleView={this.toggleView} movies={this.props.movies}/>
 

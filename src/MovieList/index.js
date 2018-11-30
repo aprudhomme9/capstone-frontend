@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Grid, Column} from 'semantic-ui-react';
 
 const serverUrl = 'http://localhost:5000/'
 
@@ -18,19 +19,27 @@ class MovieList extends Component{
 			if(movie.imageUrl == 'N/A'){
 				return (
 					<div>
-						<br/>
-						<h4>{movie.title}</h4>
-						<br/>
-						<img id={movie.imdbID} onClick={this.toggleView} height="400" width="300" key={i} src='https://bighugelabs.com/img/poster-light.jpg'/>
+						<Grid container columns={4} textAlign='center' style={{height: '100%'}}>
+        					<Grid.Column style={{maxWidth: 450}}>
+								<br/>
+								<h4>{movie.title}</h4>
+								<br/>
+								<img id={movie.imdbID} onClick={this.toggleView} height="400" width="300" key={i} src='https://bighugelabs.com/img/poster-light.jpg'/>
+							</Grid.Column>
+						</Grid>
 					</div>
 				)
 			} else {
 				return (
 					<div>
-						<br/>
-						<h4>{movie.title}</h4>
-						<br/>
-						<img id={movie.imdbID} onClick={this.toggleView} height="400" width="300" key={i} src={movie.imageUrl}/>
+						<Grid container columns={1} vertical='middle'style={{height: '100%'}}>
+        					<Grid.Column columns={3}>
+								<br/>
+								<h4>{movie.title}</h4>
+								<br/>
+								<img id={movie.imdbID} onClick={this.toggleView} height="400" width="300" key={i} src={movie.imageUrl}/>
+							</Grid.Column>
+						</Grid>
 					</div>
 				)
 			}

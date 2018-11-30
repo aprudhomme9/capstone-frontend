@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Button, Input} from 'semantic-ui-react'
+import {Form, Button, Input, Segment, Container} from 'semantic-ui-react'
 
 class SearchContainer extends Component {
 	constructor(){
@@ -23,10 +23,12 @@ class SearchContainer extends Component {
 		const message = 'Search ' + this.props.placeholder + ' here...';
 		return(
 
-			<div>
+			<div>	
 				<Form onSubmit={this.handleSubmit}>
-          			<Input icon='search' onChange={this.handleChange} type="text" value={this.state.search} name='search' placeholder={message}/>
-          			<Button type="submit">Search</Button>
+					<Segment inverted>
+          				<Input inverted icon='search' onChange={this.handleChange} type="text" value={this.state.search} name='search' placeholder={message}/>
+          				<Button type="submit">Search</Button>
+          			</Segment>	
 
       			</Form>
 			</div>

@@ -10,39 +10,20 @@ class MovieContainer extends Component {
 			movies: []
 		}
 	}
-	fetchMovies = async (search) => {
-		try {
-			const movies = await fetch(serverUrl + 'api/movies/' + search, {
-				credentials: 'include'
-			})
-
-			const parsedMovies = await movies.json();
-			return parsedMovies
-		} catch (err) {
-			// res.send(err)
-		}
-		
-
-	}
-	getResults = async (search) => {
-		const query = search;
-		this.fetchMovies(query).then((movies) => {
-			if(movies){
-				this.setState({
-					movies: movies.data
-			})
-			}
-		})
+	handleClick = (e) => {
+		e.preventDefault();
+		console.log(e.currentTarget.id);
 	}
 	render(){ 
-		const moviePosters = this.state.movies.map((movie, i) => {
+		const moviePosters = this.props.movies.map((movie, i) => {
+			console.log(movie.imdbID);
 			if(movie.imageUrl == 'N/A'){
 				return (
 					<div>
 						<br/>
-						<h4>{movie.title}</h4>
+						<h4 onClick={this.handleClick}>{movie.title}</h4>
 						<br/>
-						<img height="400" width="300" key={i} src='https://bighugelabs.com/img/poster-light.jpg'/>
+						<img id={movie.imdbID} onClick={this.handleClick} height="400" width="300" key={i} src='https://bighugelabs.com/img/poster-light.jpg'/>
 					</div>
 				)
 			} else {
@@ -51,7 +32,7 @@ class MovieContainer extends Component {
 						<br/>
 						<h4>{movie.title}</h4>
 						<br/>
-						<img height="400" width="300" key={i} src={movie.imageUrl}/>
+						<img id={movie.imdbID} onClick={this.handleClick} height="400" width="300" key={i} src={movie.imageUrl}/>
 					</div>
 				)
 			}
@@ -59,7 +40,6 @@ class MovieContainer extends Component {
 		})
 		return(
 			<div>
-				<SearchContainer placeholder='movies' getResults={this.getResults}/>
 				{moviePosters}
 			</div>
 			)

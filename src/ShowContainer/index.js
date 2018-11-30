@@ -2,52 +2,36 @@ import React, {Component} from 'react';
 
 import SearchContainer from '../SearchContainer';
 
+import ShowList from '../ShowList';
+import DisplayShow from '../DisplayShow';
+
 const serverUrl = 'http://localhost:5000/'
 class ShowContainer extends Component {
 	constructor(){
 		super();
 
 		this.state = {
-			shows: []
+			showToDisplay: '',
+			showShow: false
 		}
+	}
+	toggleView = (show) => {
+		this.setState({
+			showShow: !this.state.showShow,
+			showToDisplay: show
+		})
 	}
 	render(){ 
-		if(this.props.shows != undefined){
-			const showPosters = this.props.shows.map((show, i) => {
-			if(show.imageUrl == 'N/A'){
-				return (
-					<div>
-						<br/>
-						<h4>{show.title}</h4>
-						<br/>
-						<img height="400" width="300" key={i} src='https://bighugelabs.com/img/poster-light.jpg'/>
-					</div>
-				)
-			} else {
-				return (
-					<div>
-						<br/>
-						<h4>{show.title}</h4>
-						<br/>
-						<img height="400" width="300" key={i} src={show.imageUrl}/>
-					</div>
-				)
+		return(
+			<div>
+			{this.state.showShow ? <DisplayShow show={this.state.showToDisplay} toggleView={this.toggleView}/> :
+
+			<ShowList toggleView={this.toggleView} shows={this.props.shows}/>
+
 			}
-			
-		}
-)
-		return(
-			<div>
-				{showPosters}
 			</div>
-			)
-	} else {
-		return(
-			<div>
-				<h1>Could Not Find Anything Matching Your Search</h1>
-			</div>
+
 			)
 	}
-}
 }
 export default ShowContainer

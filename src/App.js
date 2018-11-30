@@ -124,7 +124,7 @@ class App extends Component {
     console.log(this.state, '<---STATE');
     return (
       <div className="App">
-        <Header getResults={this.getResults} toggle={this.toggle} loggedIn={this.state.loggedIn} activeItem={this.state.activeItem} handleClick={this.handleClick}/>
+        <Header movie={this.state.movie} getResults={this.getResults} toggle={this.toggle} loggedIn={this.state.loggedIn} activeItem={this.state.activeItem} handleClick={this.handleClick}/>
 
         {this.state.activeItem === 'Home' && this.state.movie ? <MovieContainer user={this.state.user} movies={this.state.movies} /> : 
 

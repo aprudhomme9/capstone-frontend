@@ -5,6 +5,10 @@ class GroupContainer extends Component{
 		super()
 	}
 	render(){
+		// should have discussion container
+		// member container
+		// popularMovies container
+		// popularShows container
 		return(
 			<h1>Groups</h1>
 			)

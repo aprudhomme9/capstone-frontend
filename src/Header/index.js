@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {Menu, Item, Button, Input, Radio, Segment, Form} from 'semantic-ui-react';
 import SearchContainer from '../SearchContainer';
+import './styles.css'
 class Header extends Component{
 	constructor(){
 		super()
 		this.state = {
 			search: '',
-			loggedIn: false
+			loggedIn: false,
+			view: 'Movie View'
 		}
 	}
 	handleChange = (e) => {
@@ -41,7 +43,11 @@ class Header extends Component{
 						<Menu.Item name='inbox' active={this.props.activeItem == 'Inbox'} onClick={this.props.handleClick.bind()}/>
 						<Menu.Menu position='right'>
 							<Menu.Item>
-								<Radio toggle label="TV" label-color="white" onChange={this.props.toggle.bind()}/>
+								<Radio toggle onChange={this.props.toggle.bind()}/>
+								{this.props.movie ? <p className="toggle">Movie View</p> :
+									<p>TV View</p>
+								}
+								
 							</Menu.Item>
 							<Form onSubmit={this.handleSubmit}>
 								<Segment inverted>

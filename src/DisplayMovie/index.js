@@ -34,6 +34,47 @@ class DisplayMovie extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
+		console.log(parsedMovie.data.favorites);
+		const numberFavorites = parsedMovie.data.favorites + 1;
+		console.log(numberFavorites);
+		const updatedMovie = await fetch(serverUrl + 'api/movies/movie/' + this.props.movie._id, {
+			method: 'PUT',
+			credentials: 'include',
+			body: JSON.stringify({
+				favorites: numberFavorites
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+	}
+	addToWatchlist = async (e) => {
+		e.preventDefault();
+		const movieToAdd = await fetch(serverUrl + 'api/movies/movie/add/' + this.props.movie._id);
+		const parsedMovie = await movieToAdd.json();
+		const userId = this.props.user._id
+;		const userToEdit = await fetch(serverUrl + 'api/users/' + userId, {credentials: 'include'});
+		
+		const parsedUser = await userToEdit.json();
+		const newMovieArray = parsedUser.data.watchListMovies.filter((movie) => {
+				if(movie._id !== parsedMovie.data._id){
+					return movie
+				}
+		})
+		
+		newMovieArray.push(parsedMovie.data);
+		console.log(newMovieArray, '<--WATCHLIST');
+		const updatedUser = await fetch(serverUrl + 'api/users/' + userId, {
+			method: 'PUT',
+			credentials: 'include',
+			body: JSON.stringify({
+				watchListMovies: newMovieArray
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		console.log(updatedUser.data);
 	}
 	render(){
 		console.log(this.props.movie, '<---MOVIE WITH PROPERTIES');
@@ -59,7 +100,7 @@ class DisplayMovie extends Component{
 	 			
  				<Button onClick={this.addToFavorites}>Favorite</Button>
  			
-      			<Button>Add to Watchlist</Button>
+      			<Button onClick={this.addToWatchlist}>Add to Watchlist</Button>
       			<Button>Recommend</Button>			
 			</div>
 

@@ -24,7 +24,7 @@ class ShowContainer extends Component {
 	render(){ 
 		return(
 			<div>
-			{this.state.showShow ? <DisplayShow show={this.state.showToDisplay} toggleView={this.toggleView}/> :
+			{this.state.showShow ? <DisplayShow user={this.props.user} show={this.state.showToDisplay} toggleView={this.toggleView}/> :
 
 			<ShowList toggleView={this.toggleView} shows={this.props.shows}/>
 

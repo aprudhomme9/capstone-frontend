@@ -8,6 +8,7 @@ class MovieList extends Component{
 		super()
 	}
 	toggleView = async (e) => {
+		console.log(e.currentTarget.id, '<---ID CLICKIINNG');
 		const selectedMovie = await fetch(serverUrl + 'api/movies/movie/' + e.currentTarget.id);
 		const parsedMovie = await selectedMovie.json();
 

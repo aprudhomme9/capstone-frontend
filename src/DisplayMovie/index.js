@@ -23,7 +23,7 @@ class DisplayMovie extends Component{
 		})
 		
 		newMovieArray.push(parsedMovie.data);
-		console.log(newMovieArray, '<---new movie array');
+
 		const updatedUser = await fetch(serverUrl + 'api/users/' + userId, {
 			method: 'PUT',
 			credentials: 'include',
@@ -34,8 +34,6 @@ class DisplayMovie extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
-
-		console.log(this.props.user.favoriteMovies, '<----USERS FAVORITE MOVIES')
 	}
 	render(){
 		console.log(this.props.movie, '<---MOVIE WITH PROPERTIES');
@@ -52,6 +50,7 @@ class DisplayMovie extends Component{
 	      					<Card.Description>{this.props.movie.description}</Card.Description>
 	    				</Card.Content>
 	    				<Card.Content extra>
+	    					<p>{this.props.movie.runTime}</p>
 	      					<p>IMDB Rating: {this.props.movie.imdbRating}</p>
 	      					<p>Actors: {this.props.movie.actors}</p>
 	    				</Card.Content>

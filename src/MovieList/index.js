@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Column} from 'semantic-ui-react';
+import {Grid, Column, Button} from 'semantic-ui-react';
 
 const serverUrl = 'http://localhost:5000/'
 
@@ -19,7 +19,8 @@ class MovieList extends Component{
 			if(movie.imageUrl == 'N/A'){
 				return (
 					<div>
-						<Grid container columns={4} textAlign='center' style={{height: '100%'}}>
+						
+						<Grid container columns={1} textAlign='center' style={{height: '100%'}} vertical='middle'>
         					<Grid.Column style={{maxWidth: 450}}>
 								<br/>
 								<h4>{movie.title}</h4>
@@ -32,8 +33,8 @@ class MovieList extends Component{
 			} else {
 				return (
 					<div>
-						<Grid container columns={1} vertical='middle'style={{height: '100%'}}>
-        					<Grid.Column columns={3}>
+						<Grid container columns={1} textAlign='center' vertical='middle' style={{height: '100%'}}>
+        					<Grid.Column style={{maxWidth: 450}}>
 								<br/>
 								<h4>{movie.title}</h4>
 								<br/>

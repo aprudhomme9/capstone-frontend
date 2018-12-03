@@ -10,6 +10,7 @@ import InboxContainer from './InboxContainer';
 import ShowContainer from './ShowContainer';
 import LoginContainer from './LoginContainer';
 import LogoutContainer from './LogoutContainer';
+import HomeContainer from './HomeContainer';
 
 const serverUrl = 'http://localhost:5000/'
 
@@ -21,6 +22,7 @@ class App extends Component {
       activeItem: 'Home',
       loggedIn: false,
       movie: true,
+      search: false,
       movies: [],
       shows: [],
       user: ''
@@ -28,16 +30,17 @@ class App extends Component {
   }
   handleGlobalState = (loggedIn, user) => {
     console.log('HANDLING GLOBAL STATE');
+    this.setState({
+      activeItem: 'Home',
+      loggedIn: loggedIn
+    })
+    // if !loggedIn
+    this.fetchUser().then((user) => {
+      console.log(user.data, '<--------USER DATA');
       this.setState({
-        activeItem: 'Home',
-        loggedIn: loggedIn
-     })
-      this.fetchUser().then((user) => {
-        console.log(user.data, '<--------USER DATA');
-        this.setState({
-          user: user.data
-        })
+        user: user.data
       })
+    })
   }
   fetchUser = async () => {
     try {
@@ -91,7 +94,9 @@ class App extends Component {
       this.fetchMovies(query).then((movies) => {
         if(movies){
           this.setState({
-           movies: movies.data
+           movies: movies.data,
+           search: true,
+           activeItem: 'Home'
           })
         }
       })
@@ -99,7 +104,9 @@ class App extends Component {
       this.fetchShows(query).then((shows) => {
         if(shows){
           this.setState({
-            shows: shows.data
+            shows: shows.data,
+            search: true,
+            activeItem: 'Home'
           })
         }
       })
@@ -111,11 +118,22 @@ class App extends Component {
     this.setState({
       activeItem: e.currentTarget.text
     })
+    if(e.currentTarget.text === 'Home'){
+      this.setState({
+        search: false
+      })
+    }
   }
   toggle = () => {
     console.log('TOGGLE');
     this.setState({
       movie: !this.state.movie
+    })
+  }
+  // handleExit will handle going back to home page from search results
+  handleExit = () => {
+    this.setState({
+      search: false
     })
   }
   // activeItem options --> Home, My Profile, Movie Buds, Groups, Inbox, Login, Logout
@@ -126,9 +144,11 @@ class App extends Component {
       <div className="App">
         <Header movie={this.state.movie} getResults={this.getResults} toggle={this.toggle} loggedIn={this.state.loggedIn} activeItem={this.state.activeItem} handleClick={this.handleClick}/>
 
-        {this.state.activeItem === 'Home' && this.state.movie ? <MovieContainer user={this.state.user} movies={this.state.movies} /> : 
+        {this.state.activeItem === 'Home' && this.state.movie && this.state.search ? <MovieContainer user={this.state.user} movies={this.state.movies} /> : 
 
-        this.state.activeItem ==='Home' && !this.state.movie ? <ShowContainer user={this.state.user} shows={this.state.shows} /> : 
+        this.state.activeItem ==='Home' && !this.state.movie && this.state.search ? <ShowContainer user={this.state.user} shows={this.state.shows} /> : 
+
+        this.state.activeItem === 'Home' && !this.state.search ? <HomeContainer /> :
 
         this.state.activeItem === 'My Profile' ? <ProfileContainer user={this.state.user} /> : 
 

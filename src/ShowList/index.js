@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Grid, Card, Image} from 'semantic-ui-react';
 const serverUrl = 'http://localhost:5000/'
 
 class ShowList extends Component{
@@ -16,31 +17,37 @@ class ShowList extends Component{
 		if(this.props.shows != undefined){
 			const showPosters = this.props.shows.map((show, i) => {
 			if(show.imageUrl == 'N/A'){
-				return (
-					<div>
-						<br/>
-						<h4>{show.title}</h4>
-						<br/>
-						<img id={show.imdbID} onClick={this.toggleView} height="400" width="300" key={i} src='https://bighugelabs.com/img/poster-light.jpg'/>
-					</div>
+				return(
+				<Card id={show.imdbID} onClick={this.toggleView}>
+	   				<Image src='https://bighugelabs.com/img/poster-light.jpg' />
+	   				<Card.Content>
+	      				<Card.Header>{show.title}</Card.Header>
+	    			</Card.Content>
+	 			</Card>
 				)
 			} else {
 				return (
-					<div>
-						<br/>
-						<h4>{show.title}</h4>
-						<br/>
-						<img id={show.imdbID} onClick={this.toggleView} height="400" width="300" key={i} src={show.imageUrl}/>
-					</div>
+					<Card id={show.imdbID} onClick={this.toggleView}>
+	   					<Image src={show.imageUrl} />
+	   					<Card.Content>
+	      					<Card.Header>{show.title}</Card.Header>
+	    				</Card.Content>
+	 				</Card>
 				)
 			}
 			
 		}
 )
 		return(
-			<div>
-				{showPosters}
-			</div>
+			<Grid>
+				<Grid.Row textAlign='center'>
+						<Grid.Column width={16}>
+							<Card.Group itemsPerRow={5}>
+							{showPosters}
+							</Card.Group>
+						</Grid.Column>
+					</Grid.Row>
+			</Grid>
 			)
 	} else {
 		return(

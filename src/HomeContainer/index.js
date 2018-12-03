@@ -80,6 +80,14 @@ class HomeContainer extends Component{
 		})
 	}
 	render(){
+		const sortedMovies = this.state.popularMovies.sort((a,b) => {
+			return b.favorites - a.favorites
+		})
+		let limitedArray = [];
+		for(let i = 0; i< 5; i++){
+			limitedArray.push(this.state.popularMovies[i]);
+		}
+		console.log(this.state.popularMovies[1]);
 		const popularMovies = this.state.popularMovies.map((movie) => {
 			return(
 				<Card id={movie._id} onClick={this.toggleMovie}>
@@ -91,6 +99,9 @@ class HomeContainer extends Component{
 
 
 				)
+		})
+		const sortedShows = this.state.popularShows.sort((a,b) => {
+			return b.favorites - a.favorites
 		})
 		const popularShows = this.state.popularShows.map((show) => {
 			return(
@@ -106,7 +117,6 @@ class HomeContainer extends Component{
 		})
 		return(
 			<div>
-			<h1>Watch With Friends</h1>
 			{this.state.viewMovie ?  <DisplayMovie toggleView={this.passBack} user={this.state.activeUser} movie={this.state.movieToPass}/> :
 				this.state.viewShow ? <DisplayShow toggleView={this.passBack} user={this.state.activeUser} show={this.state.showToPass}/> :
 			<Grid>

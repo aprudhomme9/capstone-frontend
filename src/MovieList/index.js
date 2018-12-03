@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Column, Button} from 'semantic-ui-react';
+import {Grid, Column, Button, Card, Image} from 'semantic-ui-react';
 
 const serverUrl = 'http://localhost:5000/'
 
@@ -8,7 +8,7 @@ class MovieList extends Component{
 		super()
 	}
 	toggleView = async (e) => {
-		console.log(e.currentTarget.id, '<---ID CLICKIINNG');
+		console.log(e.currentTarget, '<---ID CLICKIINNG');
 		const selectedMovie = await fetch(serverUrl + 'api/movies/movie/' + e.currentTarget.id);
 		const parsedMovie = await selectedMovie.json();
 
@@ -19,38 +19,36 @@ class MovieList extends Component{
 			console.log(movie.imdbID);
 			if(movie.imageUrl == 'N/A'){
 				return (
-					<div>
-						
-						<Grid container columns={1} textAlign='center' style={{height: '100%'}} vertical='middle'>
-        					<Grid.Column style={{maxWidth: 450}}>
-								<br/>
-								<h4>{movie.title}</h4>
-								<br/>
-								<img id={movie.imdbID} onClick={this.toggleView} height="400" width="300" key={i} src='https://bighugelabs.com/img/poster-light.jpg'/>
-							</Grid.Column>
-						</Grid>
-					</div>
+						<Card id={movie.imdbID} onClick={this.toggleView}>
+	   						<Image src='https://bighugelabs.com/img/poster-light.jpg' />
+	   						<Card.Content>
+	      						<Card.Header>{movie.title}</Card.Header>
+	    					</Card.Content>
+	 					</Card>
+
 				)
 			} else {
 				return (
-					<div>
-						<Grid container columns={1} textAlign='center' vertical='middle' style={{height: '100%'}}>
-        					<Grid.Column style={{maxWidth: 450}}>
-								<br/>
-								<h4>{movie.title}</h4>
-								<br/>
-								<img id={movie.imdbID} onClick={this.toggleView} height="400" width="300" key={i} src={movie.imageUrl}/>
-							</Grid.Column>
-						</Grid>
-					</div>
+						<Card onClick={this.toggleView} id={movie.imdbID}>
+	   						<Image src={movie.imageUrl} />
+	   						<Card.Content>
+	      						<Card.Header>{movie.title}</Card.Header>
+	    					</Card.Content>
+	 					</Card>
 				)
 			}
 			
 		})
 		return(
-			<div>
-				{moviePosters}
-			</div>
+			<Grid>
+				<Grid.Row textAlign='center'>
+						<Grid.Column width={16}>
+							<Card.Group itemsPerRow={5}>
+							{moviePosters}
+							</Card.Group>
+						</Grid.Column>
+					</Grid.Row>
+			</Grid>
 			)
 	}
 }

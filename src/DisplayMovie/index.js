@@ -91,6 +91,7 @@ class DisplayMovie extends Component{
 	    				<Card.Content extra>
 	    					<p>{this.props.movie.runTime}</p>
 	      					<p>IMDB Rating: {this.props.movie.imdbRating}</p>
+	      					<p>{this.props.movie.genre}</p>
 	      					<p>Actors: {this.props.movie.actors}</p>
 	    				</Card.Content>
 	 				</Card>

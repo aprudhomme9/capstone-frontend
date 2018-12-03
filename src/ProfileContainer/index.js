@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import DisplayMovie from '../DisplayMovie';
+import DisplayShow from '../DisplayShow';
 import {Card, Group, Image, Grid, Column, Row} from 'semantic-ui-react';
+
 const serverUrl = 'http://localhost:5000/';
 
 
@@ -14,11 +16,44 @@ class ProfileContainer extends Component{
 			watchListMovies: [],
 			favoriteShows: [],
 			watchListShows: [],
-			movieToPass: ''
+			movieToPass: '',
+			viewMovie: false,
+			showToPass: '',
+			viewShow: false,
+			activeUser: ''
 		}
 	}
-	toggleView = (e) => {
+	fetchActiveUser = async () => {
+		const activeUser = await fetch(serverUrl + 'api/users', {credentials: 'include'});
+		const parsedUser = await activeUser.json();
+
+		return parsedUser
+	}
+	toggleMovie = async (e) => {
 		console.log(e.currentTarget.id);
+		const movieToPass = await fetch(serverUrl + 'api/movies/movie/add/' + e.currentTarget.id);
+		const parsedMovie = await movieToPass.json();
+		console.log(parsedMovie);
+
+		this.setState({
+			movieToPass: parsedMovie.data,
+			viewMovie: !this.state.viewMovie
+		})
+	}
+	toggleShow = async (e) => {
+		const showToPass = await fetch(serverUrl + 'api/shows/show/add/' + e.currentTarget.id);
+		const parsedShow = await showToPass.json();
+
+		this.setState({
+			showToPass: parsedShow.data,
+			viewShow: !this.state.viewShow
+		})
+	}
+	passBack = () => {
+		this.setState({
+			viewMovie: false,
+			viewShow: false
+		})
 	}
 	fetchFavoriteShows = async () => {
 		const userShows = await fetch(serverUrl + 'api/users/' + this.props.user._id, {
@@ -83,13 +118,18 @@ class ProfileContainer extends Component{
 				watchListShows: show
 			})
 		})
+		this.fetchActiveUser().then((user) => {
+			this.setState({
+				activeUser: user.data
+			})
+		})
 	}
 	render(){
 		console.log(this.state, '<----STATE');
 		if(this.props.user){
 			const userFavorites = this.state.favoriteMovies.map((movie) => {
 			return (
-				<Card >
+				<Card onClick={this.toggleMovie} id={movie._id}>
 	   					<Image src={movie.imageUrl} />
 	   					<Card.Content>
 	      					<Card.Header>{movie.title}</Card.Header>
@@ -100,7 +140,7 @@ class ProfileContainer extends Component{
 		})
 			const userWatchList = this.state.watchListMovies.map((movie) => {
 				return (
-					<Card>
+					<Card onClick={this.toggleMovie} id={movie._id}>
 	   					<Image src={movie.imageUrl} />
 	   					<Card.Content>
 	      					<Card.Header>{movie.title}</Card.Header>
@@ -112,7 +152,7 @@ class ProfileContainer extends Component{
 		})
 			const userShowFavorites = this.state.favoriteShows.map((show) => {
 				return (
-				<Card >
+				<Card onClick={this.toggleShow} id={show._id}>
 	   					<Image src={show.imageUrl} />
 	   					<Card.Content>
 	      					<Card.Header>{show.title}</Card.Header>
@@ -122,7 +162,7 @@ class ProfileContainer extends Component{
 		})
 			const userShowWatchlist = this.state.watchListShows.map((show) => {
 				return (
-				<Card >
+				<Card onClick={this.toggleShow} id={show._id}>
 	   					<Image src={show.imageUrl} />
 	   					<Card.Content>
 	      					<Card.Header>{show.title}</Card.Header>
@@ -132,6 +172,10 @@ class ProfileContainer extends Component{
 			})
 
 			return(
+				<div>
+				{this.state.viewMovie ?  <DisplayMovie toggleView={this.passBack} user={this.state.activeUser} movie={this.state.movieToPass}/> :
+				this.state.viewShow ? <DisplayShow toggleView={this.passBack} user={this.state.activeUser} show={this.state.showToPass}/> :
+
 				<div>
 					<h1>{this.props.user.username}'s Profile</h1>
 					<Grid>
@@ -166,6 +210,8 @@ class ProfileContainer extends Component{
 					</Grid>
 
 				</div>
+			}
+			</div>
 			)
 		} else {
 			console.log('NOT LOGGED IN');

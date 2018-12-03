@@ -22,7 +22,6 @@ class DisplayShow extends Component{
 					return show
 				}
 		})
-		console.log(parsedUser, '<----userToEdit');
 		newShowArray.push(parsedShow.data);
 
 		const updatedUser = await fetch(serverUrl + 'api/users/' + userId, {
@@ -50,7 +49,6 @@ class DisplayShow extends Component{
 		})
 	}
 	addToWatchlist = async (e) => {
-		console.log('ADDING TO WATCHLIST');
 		e.preventDefault();
 		const showToAdd = await fetch(serverUrl + 'api/shows/show/add/' + this.props.show._id);
 		const parsedShow = await showToAdd.json();
@@ -65,7 +63,6 @@ class DisplayShow extends Component{
 		})
 		
 		newShowArray.push(parsedShow.data);
-		console.log(newShowArray, '<--WATCHLIST');
 		const updatedUser = await fetch(serverUrl + 'api/users/' + userId, {
 			method: 'PUT',
 			credentials: 'include',
@@ -79,7 +76,6 @@ class DisplayShow extends Component{
 		// console.log(updatedUser.data);
 	}
 	render(){
-		console.log(this.props.show, '<---show WITH PROPERTIES');
 		return(
 			<div>
 				<div className='back'>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Group, Image} from 'semantic-ui-react';
+import {Card, Group, Image, Icon} from 'semantic-ui-react';
 import ProfileContainer from '../ProfileContainer';
 
 const serverUrl = 'http://localhost:5000/'
@@ -44,14 +44,22 @@ class FriendContainer extends Component{
 	}
 	render(){
 		console.log(this.state.userToView, '<---USER TO VIEW');
+		const extra = (
+				<div>
+					<a>
+					<Icon name='user'/>
+					</a>
+				</div>
+			)
 		const userList = this.state.users.map((user) => {
+			const favorites = 'Favorites: ' + (user.favoriteShows.length + user.favoriteMovies.length);
 			return(
 				<Card id={user._id} onClick={this.handleClick}
     				image='https://www.mashtraxx.com/static/images/generic-user.png'
     				header={user.username}
     				meta='Friend'
-    				description='testing'
-    				extra='testing'
+    				description={favorites}
+    				extra={extra}
   				/>
 				)
 		})

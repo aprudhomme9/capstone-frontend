@@ -34,9 +34,7 @@ class DisplayMovie extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
-		console.log(parsedMovie.data.favorites);
 		const numberFavorites = parsedMovie.data.favorites + 1;
-		console.log(numberFavorites);
 		const updatedMovie = await fetch(serverUrl + 'api/movies/movie/' + this.props.movie._id, {
 			method: 'PUT',
 			credentials: 'include',
@@ -52,8 +50,8 @@ class DisplayMovie extends Component{
 		e.preventDefault();
 		const movieToAdd = await fetch(serverUrl + 'api/movies/movie/add/' + this.props.movie._id);
 		const parsedMovie = await movieToAdd.json();
-		const userId = this.props.user._id
-;		const userToEdit = await fetch(serverUrl + 'api/users/' + userId, {credentials: 'include'});
+		const userId = this.props.user._id;
+		const userToEdit = await fetch(serverUrl + 'api/users/' + userId, {credentials: 'include'});
 		
 		const parsedUser = await userToEdit.json();
 		const newMovieArray = parsedUser.data.watchListMovies.filter((movie) => {
@@ -74,10 +72,10 @@ class DisplayMovie extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
-		console.log(updatedUser.data);
+
 	}
 	render(){
-		console.log(this.props.movie, '<---MOVIE WITH PROPERTIES');
+
 		return(
 			<div>
 				<div className='back'>

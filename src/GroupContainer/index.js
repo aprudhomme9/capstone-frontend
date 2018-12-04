@@ -13,8 +13,38 @@ class GroupContainer extends Component{
 		this.state = {
 			displayGroup: false,
 			groups: [],
-			groupToDisplay: null
+			groupToDisplay: null,
+			modalOpen: false
 		}
+	}
+	closeModal = () => {
+		this.setState({
+			modalOpen: false
+		})
+	}
+	openModal = async () => {
+		this.setState({
+			modalOpen: true
+		})
+		
+	}
+	handleSubmit = async (groupName) => {
+		const groupToCreate = await fetch(serverUrl + 'api/groups', {
+			method: 'POST',
+			body: JSON.stringify({
+				name: groupName
+
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		this.closeModal();
+		this.fetchGroups().then((groups) => {
+			this.setState({
+				groups: groups.data
+			})
+		})
 	}
 	// will handle editing the group to add user to its members
 	handleJoin = async () => {
@@ -44,7 +74,11 @@ class GroupContainer extends Component{
 				}
 
 			})
-		
+		this.fetchDisplayGroup(this.state.groupToDisplay._id).then((group) => {
+			this.setState({
+				groupToDisplay: group.data
+			})
+		})
 
 	}
 	fetchGroups = async () => {
@@ -54,25 +88,18 @@ class GroupContainer extends Component{
 		return parsedGroups
 	}
 	fetchDisplayGroup = async (id) => {
-		console.log(id, 'ID PASSING THROUGH');
 		const groupToDisplay = await fetch(serverUrl + 'api/groups/' + id);
-		console.log(groupToDisplay, 'GETTING TEH GROUP TO DISPLAY');
 		const parsedGroupToDisplay = await groupToDisplay.json();
 		return parsedGroupToDisplay
 	}
 	toggleView = (id) => {
-		console.log(id, 'HERES TEH ID');
-		console.log(this.state);
 		const groupId = id;
 		this.fetchDisplayGroup(groupId).then((group) => {
-			console.log(group.data, 'group in fetch');
 			this.setState({
 				groupToDisplay: group.data,
 				displayGroup: !this.state.displayGroup
 			})
 		})
-		
-		console.log(this.state, '<---- STATE');
 	}
 	componentDidMount(){
 		this.fetchGroups().then((groups) => {
@@ -98,14 +125,18 @@ class GroupContainer extends Component{
 				</Grid.Row>
 				<Grid.Row>
 					<Grid.Column width={8}>
+						<Grid.Row>
+						<Grid.Column width={8}>
 						<GroupMembers group={this.state.groupToDisplay}/>
+						</Grid.Column>
+						</Grid.Row>
 					</Grid.Column>
 					<Grid.Column width={8}>
-						<GroupDiscussion />
+						<GroupDiscussion group={this.state.groupToDisplay} />
 					</Grid.Column>
 				</Grid.Row>
 			</Grid> :
-			<GroupList toggleView={this.toggleView} groups={this.state.groups}/>}
+			<GroupList handleSubmit={this.handleSubmit} modalOpen={this.state.modalOpen} closeModal={this.closeModal} openModal={this.openModal} toggleView={this.toggleView} groups={this.state.groups}/>}
 			</div>
 			)
 	}

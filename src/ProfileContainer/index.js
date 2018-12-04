@@ -179,7 +179,7 @@ class ProfileContainer extends Component{
 				
 				<Modal.Content>
 					<p className="close" onClick={this.closeModal}>+</p>
-					<DisplayMovie user={this.state.activeUser} movie={this.state.movieToPass} />
+					<DisplayMovie toggleView={this.closeModal} user={this.state.activeUser} movie={this.state.movieToPass} />
 				</Modal.Content>
 				</Modal>
 
@@ -187,7 +187,7 @@ class ProfileContainer extends Component{
 				
 				<Modal.Content>
 					<p className="close" onClick={this.closeModal}>+</p>
-					<DisplayShow cuser={this.state.activeUser} show={this.state.showToPass} />
+					<DisplayShow toggleView={this.closeModal} user={this.state.activeUser} show={this.state.showToPass} />
 				</Modal.Content>
 				</Modal>
 				

@@ -55,6 +55,7 @@ class DisplayMovie extends Component{
 		const parsedEditGroup = await editGroup.json();
 		console.log(parsedEditGroup.data);
 		this.closeModal();
+		this.props.toggleView();
 	}
 	openModal = async (e) => {
 		e.preventDefault();

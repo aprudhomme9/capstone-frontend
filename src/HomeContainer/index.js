@@ -121,7 +121,7 @@ class HomeContainer extends Component{
 				
 				<Modal.Content>
 					<p className="close" onClick={this.passBack}>+</p>
-					<DisplayMovie user={this.state.activeUser} movie={this.state.movieToPass} />
+					<DisplayMovie toggleView={this.passBack} user={this.state.activeUser} movie={this.state.movieToPass} />
 				</Modal.Content>
 				</Modal>
 
@@ -129,7 +129,7 @@ class HomeContainer extends Component{
 				
 				<Modal.Content>
 					<p className="close" onClick={this.passBack}>+</p>
-					<DisplayShow cuser={this.state.activeUser} show={this.state.showToPass} />
+					<DisplayShow toggleView={this.passBack} user={this.state.activeUser} show={this.state.showToPass} />
 				</Modal.Content>
 				</Modal>
 			<Grid>

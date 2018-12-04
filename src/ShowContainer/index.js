@@ -4,6 +4,7 @@ import SearchContainer from '../SearchContainer';
 
 import ShowList from '../ShowList';
 import DisplayShow from '../DisplayShow';
+import {Modal, Button} from 'semantic-ui-react';
 
 const serverUrl = 'http://localhost:5000/'
 class ShowContainer extends Component {
@@ -12,7 +13,8 @@ class ShowContainer extends Component {
 
 		this.state = {
 			showToDisplay: '',
-			showShow: false
+			showShow: false,
+			activeUser: ''
 		}
 	}
 	toggleView = (show) => {
@@ -21,14 +23,37 @@ class ShowContainer extends Component {
 			showToDisplay: show
 		})
 	}
+	fetchUser = async () => {
+		const activeUser = await fetch(serverUrl + 'api/users', {credentials: 'include'})
+		const parsedUser = await activeUser.json()
+		return parsedUser
+	}
+	closeModal = () => {
+		this.setState({
+			showShow: false
+		})
+	}
+	componentDidMount(){
+		this.fetchUser().then((user) => {
+			this.setState({
+				activeUser: user.data
+			})
+		})
+	}
 	render(){ 
 		return(
 			<div>
-			{this.state.showShow ? <DisplayShow user={this.props.user} show={this.state.showToDisplay} toggleView={this.toggleView}/> :
+			<Modal open={this.state.showShow}>
+				
+			<Modal.Content>
+					<p className="close" onClick={this.closeModal}>+</p>
+					<DisplayShow toggleView={this.toggleView} user={this.state.activeUser} show={this.state.showToDisplay} />
+				</Modal.Content>
+			</Modal>
+
 
 			<ShowList toggleView={this.toggleView} shows={this.props.shows}/>
 
-			}
 			</div>
 
 			)

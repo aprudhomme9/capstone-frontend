@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Image, Button, Grid} from 'semantic-ui-react';
+import {Card, Image, Button, Grid, Modal, Header, Dropdown} from 'semantic-ui-react';
 import './styles.css';
 
 const serverUrl = 'http://localhost:5000/';
@@ -8,6 +8,75 @@ class DisplayShow extends Component{
 	constructor(){
 		super()
 
+		this.state = {
+			groups: [],
+			groupId: '',
+
+		}
+
+	}
+	handleChange = (e, data) => {
+		e.preventDefault();
+		console.log(data);
+		const option = data.options.filter((option) => {
+			return option.value === data.value
+		})
+		console.log(option[0]);
+		const id = option[0].key;
+		
+		this.setState({
+			groupId: id
+		})
+
+	}
+	handleSubmit = async () => {
+		const showToAdd = await fetch(serverUrl + 'api/shows/show/add/' + this.props.show._id);
+		const parsedShow = await showToAdd.json();
+
+		const groupToEdit = await fetch(serverUrl + 'api/groups/' + this.state.groupId);
+		const parsedGroupToEdit = await groupToEdit.json();
+
+		const groupShows = parsedGroupToEdit.data.popularShows;
+
+		const newArray = groupShows.filter((show) => {
+			if(show._id !== parsedShow.data._id){
+				return show
+			}
+		})
+		newArray.push(parsedShow.data);
+		console.log(newArray, '<----NEW ARRAY');
+		const editGroup = await fetch(serverUrl + 'api/groups/' + this.state.groupId, {
+			method: 'PUT',
+			body: JSON.stringify({
+				popularShows: newArray
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+
+		})
+		const parsedEditGroup = await editGroup.json();
+
+		this.closeModal();
+		this.props.toggleView();
+		
+	}
+	openModal = async (e) => {
+		e.preventDefault();
+		this.setState({
+			open: true
+		})
+
+	}
+	closeModal = async () => {
+		this.setState({
+			open: false
+		})
+	}
+	fetchGroups = async () => {
+		const allGroups = await fetch(serverUrl + 'api/groups');
+		const parsedGroups = await allGroups.json();
+		return parsedGroups
 	}
 	addToFavorites = async (e) => {
 		e.preventDefault();
@@ -75,9 +144,28 @@ class DisplayShow extends Component{
 		})
 		// console.log(updatedUser.data);
 	}
+	componentDidMount(){
+		this.fetchGroups().then((groups) => {
+			this.setState({
+				groups: groups.data
+			})
+		})
+	}
 	render(){
+		const groupOptions = this.state.groups.map((group) => {
+			return {key: group._id, value: group.name, text: group.name}
+
+		})
 		return(
 			<div>
+				<Modal open={this.state.open}>
+				<Header>Add to Group</Header>
+				<Modal.Content>
+					<p className="close" onClick={this.closeModal}>+</p>
+					<Dropdown onChange={this.handleChange} clearable fluid search selection placeholder='Select Group' fluid selection options={groupOptions}/>
+					<Button onClick={this.handleSubmit}>Submit</Button>
+				</Modal.Content>
+				</Modal>
 				<div className='card'>
 					<Card>
 	   					<Image height="400" width="300" src={this.props.show.imageUrl} />
@@ -96,7 +184,7 @@ class DisplayShow extends Component{
  				<Button onClick={this.addToFavorites}>Favorite</Button>
  			
       			<Button onClick={this.addToWatchlist}>Add to Watchlist</Button>
-      			<Button>Recommend</Button>		
+      			<Button onClick={this.openModal}>Add to Group</Button>		
       			</div>	
 			</div>
 

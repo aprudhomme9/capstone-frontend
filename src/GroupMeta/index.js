@@ -19,12 +19,14 @@ class GroupMeta extends Component{
 
 			<Grid>
 				<Grid.Row>
-					<Grid.Column width={8}>
-						<h1>{this.props.group.name}</h1>
-					</Grid.Column>
-					<Grid.Column width={8}>
+					<Grid.Column width={2}>
 						<Button color="blue" onClick={this.handleJoin}><Icon name='user'/>Join</Button>
 					</Grid.Column>
+					<Grid.Column width={16}>
+						<h3>{this.props.group.name}</h3>
+					
+					</Grid.Column>
+					
 				</Grid.Row>
 			</Grid>
 			</div>

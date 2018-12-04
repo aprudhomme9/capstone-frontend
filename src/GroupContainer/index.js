@@ -3,7 +3,8 @@ import GroupList from '../GroupList';
 import GroupDiscussion from '../GroupDiscussion';
 import GroupMembers from '../GroupMembers';
 import {Grid, Image, Button} from 'semantic-ui-react';
-import GroupMeta from '../GroupMeta'
+import GroupMeta from '../GroupMeta';
+import GroupContent from '../GroupContent';
 const serverUrl = 'http://localhost:5000/'
 
 class GroupContainer extends Component{
@@ -124,11 +125,16 @@ class GroupContainer extends Component{
 					</Grid.Column>
 				</Grid.Row>
 				<Grid.Row>
+					<Grid.Column width={16}>
+						<GroupContent group={this.state.groupToDisplay} />
+					</Grid.Column>
+				</Grid.Row>
+				<Grid.Row>
 					<Grid.Column width={8}>
 						<Grid.Row>
-						<Grid.Column width={8}>
-						<GroupMembers group={this.state.groupToDisplay}/>
-						</Grid.Column>
+							<Grid.Column width={8}>
+							<GroupMembers group={this.state.groupToDisplay}/>
+							</Grid.Column>
 						</Grid.Row>
 					</Grid.Column>
 					<Grid.Column width={8}>

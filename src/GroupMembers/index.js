@@ -72,7 +72,7 @@ class GroupMembers extends Component{
 				</Modal.Content>
 			</Modal>
 			<div>
-				<h1>GroupMembers</h1>
+				<h3>Group Members</h3>
 				<Card.Group itemsPerRow={5}>
 					{userList}
 				</Card.Group>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Row, Column, Card, Group, Image} from 'semantic-ui-react';
+import {Modal, Grid, Row, Column, Card, Group, Image} from 'semantic-ui-react';
 import DisplayMovie from '../DisplayMovie';
 import DisplayShow from '../DisplayShow';
 const serverUrl = 'http://localhost:5000/'
@@ -117,8 +117,21 @@ class HomeContainer extends Component{
 		})
 		return(
 			<div>
-			{this.state.viewMovie ?  <DisplayMovie toggleView={this.passBack} user={this.state.activeUser} movie={this.state.movieToPass}/> :
-				this.state.viewShow ? <DisplayShow toggleView={this.passBack} user={this.state.activeUser} show={this.state.showToPass}/> :
+			<Modal open={this.state.viewMovie}>
+				
+				<Modal.Content>
+					<p className="close" onClick={this.passBack}>+</p>
+					<DisplayMovie user={this.state.activeUser} movie={this.state.movieToPass} />
+				</Modal.Content>
+				</Modal>
+
+				<Modal open={this.state.viewShow}>
+				
+				<Modal.Content>
+					<p className="close" onClick={this.passBack}>+</p>
+					<DisplayShow cuser={this.state.activeUser} show={this.state.showToPass} />
+				</Modal.Content>
+				</Modal>
 			<Grid>
 					<Grid.Row textAlign='center'>
 						<Grid.Column width={16}>
@@ -136,9 +149,9 @@ class HomeContainer extends Component{
 							</Card.Group>
 						</Grid.Column>
 					</Grid.Row>
-				}
+				
 			</Grid>
-		}
+		
 		</div>
 
 

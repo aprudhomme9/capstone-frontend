@@ -11,7 +11,8 @@ class FriendContainer extends Component{
 		this.state = {
 			users: [],
 			viewProfile: false,
-			userToView: ''
+			userToView: '',
+			ableToEdit: false
 		}
 	}
 	fetchUsers = async () => {
@@ -65,7 +66,7 @@ class FriendContainer extends Component{
 		})
 		return(
 			<div>
-			{this.state.viewProfile ? <ProfileContainer user={this.state.userToView} /> :
+			{this.state.viewProfile ? <ProfileContainer ableToEdit={this.state.ableToEdit} user={this.state.userToView} /> :
 			<div>
 				<h1>Movie Buds</h1>
 				<Card.Group itemsPerRow={5}>

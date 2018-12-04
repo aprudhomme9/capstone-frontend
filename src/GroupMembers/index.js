@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Group, Button, Icon} from 'semantic-ui-react';
+import {Card, Group, Button, Icon, Modal, Header} from 'semantic-ui-react';
 import ProfileContainer from '../ProfileContainer';
 
 const serverUrl = 'http://localhost:5000/';
@@ -11,13 +11,19 @@ class GroupMembers extends Component{
 
 		this.state = {
 			viewProfile: false,
-			userToView: ''
+			userToView: '',
+			ableToEdit: false
 		}
 	}
 	fetchTargetUser = async (id) => {
 		const targetUser = await fetch(serverUrl + 'api/users/' + id);
 		const parsedUser = await targetUser.json();
 		return parsedUser
+	}
+	closeModal = () => {
+		this.setState({
+			viewProfile: false
+		})
 	}
 	handleClick = (e) => {
 		console.log(e.currentTarget.id);
@@ -58,14 +64,19 @@ class GroupMembers extends Component{
 		})
 		return(
 			<div>
-			{this.state.viewProfile ? <ProfileContainer user={this.state.userToView} /> :
+			<Modal open={this.state.viewProfile}>
+				<Header>{this.state.userToView.username}</Header>
+				<Modal.Content>
+					<p className="close" onClick={this.closeModal}>+</p>
+					<ProfileContainer ableToEdit={this.state.ableToEdit} user={this.state.userToView} />
+				</Modal.Content>
+			</Modal>
 			<div>
 				<h1>GroupMembers</h1>
 				<Card.Group itemsPerRow={5}>
 					{userList}
 				</Card.Group>
 			</div>
-			}
 			</div>
 
 			)

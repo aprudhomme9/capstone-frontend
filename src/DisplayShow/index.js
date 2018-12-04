@@ -78,9 +78,6 @@ class DisplayShow extends Component{
 	render(){
 		return(
 			<div>
-				<div className='back'>
-					<Button onClick={this.props.toggleView}>Back</Button>
-				</div>
 				<div className='card'>
 					<Card>
 	   					<Image height="400" width="300" src={this.props.show.imageUrl} />
@@ -95,11 +92,12 @@ class DisplayShow extends Component{
 	    				</Card.Content>
 	 				</Card>
 	 			</div>	
-	 			
+	 			<div className='buttonGroup'>
  				<Button onClick={this.addToFavorites}>Favorite</Button>
  			
       			<Button onClick={this.addToWatchlist}>Add to Watchlist</Button>
-      			<Button>Recommend</Button>			
+      			<Button>Recommend</Button>		
+      			</div>	
 			</div>
 
 

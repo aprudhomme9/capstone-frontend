@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import DisplayMovie from '../DisplayMovie';
 import DisplayShow from '../DisplayShow';
-import {Card, Group, Image, Grid, Column, Row} from 'semantic-ui-react';
+import {Modal, Card, Group, Image, Grid, Column, Row, Button} from 'semantic-ui-react';
 
 const serverUrl = 'http://localhost:5000/';
 
@@ -49,7 +49,7 @@ class ProfileContainer extends Component{
 			viewShow: !this.state.viewShow
 		})
 	}
-	passBack = () => {
+	closeModal = () => {
 		this.setState({
 			viewMovie: false,
 			viewShow: false
@@ -125,7 +125,8 @@ class ProfileContainer extends Component{
 		})
 	}
 	render(){
-		console.log(this.state, '<----STATE');
+		console.log(this.props.ableToEdit, 'ABLE TO EDIT??');
+		console.log(this.st, '<----STATE');
 		if(this.props.user){
 			const userFavorites = this.state.favoriteMovies.map((movie) => {
 			return (
@@ -144,6 +145,7 @@ class ProfileContainer extends Component{
 	   					<Image src={movie.imageUrl} />
 	   					<Card.Content>
 	      					<Card.Header>{movie.title}</Card.Header>
+	      					{this.state.ableToEdit ? <Button>Remove</Button> : null}
 	    				</Card.Content>
 	 				</Card>
 
@@ -173,8 +175,22 @@ class ProfileContainer extends Component{
 
 			return(
 				<div>
-				{this.state.viewMovie ?  <DisplayMovie toggleView={this.passBack} user={this.state.activeUser} movie={this.state.movieToPass}/> :
-				this.state.viewShow ? <DisplayShow toggleView={this.passBack} user={this.state.activeUser} show={this.state.showToPass}/> :
+				<Modal open={this.state.viewMovie}>
+				
+				<Modal.Content>
+					<p className="close" onClick={this.closeModal}>+</p>
+					<DisplayMovie user={this.state.activeUser} movie={this.state.movieToPass} />
+				</Modal.Content>
+				</Modal>
+
+				<Modal open={this.state.viewShow}>
+				
+				<Modal.Content>
+					<p className="close" onClick={this.closeModal}>+</p>
+					<DisplayShow cuser={this.state.activeUser} show={this.state.showToPass} />
+				</Modal.Content>
+				</Modal>
+				
 
 				<div>
 					<h1>{this.props.user.username}'s Profile</h1>
@@ -210,7 +226,6 @@ class ProfileContainer extends Component{
 					</Grid>
 
 				</div>
-			}
 			</div>
 			)
 		} else {

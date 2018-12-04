@@ -150,7 +150,7 @@ class App extends Component {
 
         this.state.activeItem === 'Home' && !this.state.search ? <HomeContainer /> :
 
-        this.state.activeItem === 'My Profile' ? <ProfileContainer user={this.state.user} /> : 
+        this.state.activeItem === 'My Profile' ? <ProfileContainer ableToEdit={this.state.loggedIn} user={this.state.user} /> : 
 
         this.state.activeItem === 'Groups' ? <GroupContainer user={this.state.user} /> :
 

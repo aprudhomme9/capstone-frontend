@@ -37,14 +37,14 @@ class GroupDiscussion extends Component{
 			}
 		})
 		const parsedEditedComment = await editComment.json();
-		console.log(parsedEditedComment.data, '<--EDITED COMMENT');
+
 		const commentArray = this.props.group.discussion.filter((comment) => {
 				if(parsedEditedComment.data._id !== comment._id){
 					return comment
 				}
 			})
 		commentArray.push(parsedEditedComment.data);
-		console.log(commentArray, '<---COMMENT ARRAY');
+
 		const editedGroup = await fetch(serverUrl + 'api/groups/' + this.props.group._id, {
 			method: 'PUT',
 			body: JSON.stringify({
@@ -76,7 +76,6 @@ class GroupDiscussion extends Component{
 		this.setState({
 			author: parsedUserAuthor.data
 		})
-		const today = new Date();
 		const commentToCreate = await fetch(serverUrl + 'api/comments', {
 			method: 'POST',
 			body: JSON.stringify({

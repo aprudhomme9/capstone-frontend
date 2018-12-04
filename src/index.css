@@ -12,7 +12,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
+.close2 {
+	position: absolute;
+    top: 0;
+    right: 14px;
+    font-size: 42px;
+    color: white;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
 .close {
     position: absolute;
     top: 0;

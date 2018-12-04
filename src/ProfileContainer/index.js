@@ -95,6 +95,114 @@ class ProfileContainer extends Component{
 			return parsedMovies
 		}
 	}
+	handleFavorites = async (e) => {
+		e.preventDefault();
+		console.log(e.currentTarget.id);
+		const movieToRemove = await fetch(serverUrl + 'api/movies/movie/add/' + e.currentTarget.id);
+		const parsedMovie = await movieToRemove.json();
+
+		const userMovies = this.state.favoriteMovies;
+		const newMovieArray = this.state.favoriteMovies.filter((movie) => {
+			if(movie._id !== parsedMovie.data._id){
+				return movie
+			} 
+		})
+		const updatedUser = await fetch(serverUrl + 'api/users/' + this.state.activeUser._id, {
+			method: 'PUT',
+			body: JSON.stringify({
+				favoriteMovies: newMovieArray
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		this.setState({
+			viewMovie: false,
+			favoriteMovies: newMovieArray
+		})
+	}
+	handleWatchList = async (e) => {
+		console.log(e.currentTarget.id);
+		e.preventDefault();
+		console.log(e.currentTarget.id);
+		const movieToRemove = await fetch(serverUrl + 'api/movies/movie/add/' + e.currentTarget.id);
+		const parsedMovie = await movieToRemove.json();
+
+		const userMovies = this.state.watchListMovies;
+		const newMovieArray = this.state.watchListMovies.filter((movie) => {
+			if(movie._id !== parsedMovie.data._id){
+				return movie
+			} 
+		})
+		const updatedUser = await fetch(serverUrl + 'api/users/' + this.state.activeUser._id, {
+			method: 'PUT',
+			body: JSON.stringify({
+				watchListMovies: newMovieArray
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		this.setState({
+			viewMovie: false,
+			watchListMovies: newMovieArray
+		})
+	}
+	handleShowFavorites = async (e) => {
+		console.log(e.currentTarget.id);
+		e.preventDefault();
+		console.log(e.currentTarget.id);
+		const showToRemove = await fetch(serverUrl + 'api/shows/show/add/' + e.currentTarget.id);
+		const parsedShow = await showToRemove.json();
+
+		
+		const newShowArray = this.state.favoriteShows.filter((show) => {
+			if(show._id !== parsedShow.data._id){
+				return show
+			} 
+		})
+		const updatedUser = await fetch(serverUrl + 'api/users/' + this.state.activeUser._id, {
+			method: 'PUT',
+			body: JSON.stringify({
+				favoriteShows: newShowArray
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		this.setState({
+			viewShow: false,
+			favoriteShows: newShowArray
+		})
+	}
+	handleShowWatchList = async (e) => {
+		console.log(e.currentTarget.id);
+		console.log(e.currentTarget.id);
+		e.preventDefault();
+		console.log(e.currentTarget.id);
+		const showToRemove = await fetch(serverUrl + 'api/shows/show/add/' + e.currentTarget.id);
+		const parsedShow = await showToRemove.json();
+
+		
+		const newShowArray = this.state.watchListShows.filter((show) => {
+			if(show._id !== parsedShow.data._id){
+				return show
+			} 
+		})
+		const updatedUser = await fetch(serverUrl + 'api/users/' + this.state.activeUser._id, {
+			method: 'PUT',
+			body: JSON.stringify({
+				watchListShows: newShowArray
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		this.setState({
+			viewShow: false,
+			watchListShows: newShowArray
+		})
+	}
 	componentDidMount(){
 		this.fetchFavorites().then((movie) => {
 			console.log(movie);
@@ -135,6 +243,12 @@ class ProfileContainer extends Component{
 	   					<Card.Content>
 	      					<Card.Header>{movie.title}</Card.Header>
 	    				</Card.Content>
+	    				{this.props.ableToEdit ? 
+	   					<Card.Content extra>
+	   						<p id={movie._id} onClick={this.handleFavorites} className='close2'>+</p>
+         				</Card.Content> :
+         				null
+	   					}
 	 			</Card>
 
 				)
@@ -145,8 +259,13 @@ class ProfileContainer extends Component{
 	   					<Image src={movie.imageUrl} />
 	   					<Card.Content>
 	      					<Card.Header>{movie.title}</Card.Header>
-	      					{this.state.ableToEdit ? <Button>Remove</Button> : null}
 	    				</Card.Content>
+	   				{this.props.ableToEdit ? 
+	   					<Card.Content extra>
+	   						<p id={movie._id} onClick={this.handleWatchList} className='close2'>+</p>
+         				</Card.Content> :
+         				null
+	   				}
 	 				</Card>
 
 
@@ -159,6 +278,12 @@ class ProfileContainer extends Component{
 	   					<Card.Content>
 	      					<Card.Header>{show.title}</Card.Header>
 	    				</Card.Content>
+	    				{this.props.ableToEdit ? 
+	   					<Card.Content extra>
+	   						<p id={show._id} onClick={this.handleShowFavorites} className='close2'>+</p>
+         				</Card.Content> :
+         				null
+	   					}
 	 			</Card>
 	 			)
 		})
@@ -169,6 +294,14 @@ class ProfileContainer extends Component{
 	   					<Card.Content>
 	      					<Card.Header>{show.title}</Card.Header>
 	    				</Card.Content>
+	    				{this.props.ableToEdit ? 
+	   					<Card.Content extra>
+	   						
+           					<p id={show._id} onClick={this.handleShowWatchList} className='close2'>+</p>
+         					 
+         				</Card.Content> :
+         				null
+	   				}
 	 			</Card>
 	 			)
 			})

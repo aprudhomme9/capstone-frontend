@@ -79,7 +79,8 @@ class DisplayShow extends Component{
 		return parsedGroups
 	}
 	addToFavorites = async (e) => {
-		e.preventDefault();
+		if(this.props.user){
+			e.preventDefault();
 		const showToAdd = await fetch(serverUrl + 'api/shows/show/add/' + this.props.show._id);
 		const parsedShow = await showToAdd.json();
 		const userId = this.props.user._id
@@ -116,10 +117,13 @@ class DisplayShow extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
+		}
+		
 		this.props.toggleView();
 	}
 	addToWatchlist = async (e) => {
-		e.preventDefault();
+		if(this.props.user){
+			e.preventDefault();
 		const showToAdd = await fetch(serverUrl + 'api/shows/show/add/' + this.props.show._id);
 		const parsedShow = await showToAdd.json();
 		const userId = this.props.user._id
@@ -143,6 +147,8 @@ class DisplayShow extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
+		}
+		
 		// console.log(updatedUser.data);
 		this.props.toggleView();
 	}

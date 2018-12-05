@@ -75,7 +75,8 @@ class DisplayMovie extends Component{
 		return parsedGroups
 	}
 	addToFavorites = async (e) => {
-		e.preventDefault();
+		if(this.props.user){
+			e.preventDefault();
 		const movieToAdd = await fetch(serverUrl + 'api/movies/movie/add/' + this.props.movie._id);
 		const parsedMovie = await movieToAdd.json();
 		const userId = this.props.user._id
@@ -111,10 +112,13 @@ class DisplayMovie extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
+		}
+		
 		this.props.toggleView();
 	}
 	addToWatchlist = async (e) => {
-		e.preventDefault();
+		if(this.props.user){
+			e.preventDefault();
 		const movieToAdd = await fetch(serverUrl + 'api/movies/movie/add/' + this.props.movie._id);
 		const parsedMovie = await movieToAdd.json();
 		const userId = this.props.user._id;
@@ -139,6 +143,8 @@ class DisplayMovie extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
+		}
+		
 		this.props.toggleView();
 	}
 	componentDidMount(){

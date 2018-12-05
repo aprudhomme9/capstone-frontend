@@ -45,9 +45,6 @@ class GroupDiscussion extends Component{
 			})
 		commentArray.push(parsedEditedComment.data);
 
-		commentArray.sort((a,b) => {
-			return b.timeStamp - a.timeStamp
-		})
 
 		const editedGroup = await fetch(serverUrl + 'api/groups/' + this.props.group._id, {
 			method: 'PUT',
@@ -76,8 +73,8 @@ class GroupDiscussion extends Component{
 	handleComment = async (e) => {
 		const userAuthor = await fetch(serverUrl + 'api/users', {credentials: 'include'});
 		const parsedUserAuthor = await userAuthor.json();
-		
-		this.setState({
+		if(parsedUserAuthor.data){
+			this.setState({
 			author: parsedUserAuthor.data
 		})
 		const commentToCreate = await fetch(serverUrl + 'api/comments', {
@@ -110,6 +107,8 @@ class GroupDiscussion extends Component{
 			comments: commentArray,
 			commentBody: ''
 		})
+		}
+		
 
 	}
 	componentDidMount(){

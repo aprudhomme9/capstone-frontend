@@ -147,6 +147,18 @@ class DisplayShow extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
+		const numberAdds = parsedShow.data.adds + 1;
+		console.log(numberAdds);
+		const updatedshow = await fetch(serverUrl + 'api/shows/show/' + this.props.show._id, {
+			method: 'PUT',
+			credentials: 'include',
+			body: JSON.stringify({
+				adds: numberAdds
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
 		}
 		
 		// console.log(updatedUser.data);

@@ -12,7 +12,8 @@ class LoginContainer extends Component {
 	        username: '',
 	        fullname: '',
 	        password: '',
-	        register: true
+	        register: true,
+	        message: ''
 	    }
 	}
 	handleGlobalState = (loggedIn, user) => {
@@ -31,9 +32,14 @@ class LoginContainer extends Component {
 			
 		})
 		const parsedResponse = await registerResponse.json()
+		console.log(parsedResponse, '<---register response');
 		if(parsedResponse.data){
 			this.handleGlobalState(true)
 			
+		} else {
+			this.setState({
+				message: 'Username taken'
+			})
 		}
 	}
 	handleLogin = async (e) => {
@@ -48,10 +54,17 @@ class LoginContainer extends Component {
 			}
 		})
 		const parsedResponse = await loginResponse.json()
-		if(parsedResponse.data){
+		console.log(parsedResponse, '<----LOGIN RESPONSE');
+		console.log(parsedResponse.status);
+		console.log(parsedResponse.message, '<---MESSAGE');
+		if(parsedResponse.message == 'Success'){
 			console.log('log in successful');
 			console.log(parsedResponse.data);
 			this.handleGlobalState(true);
+		} else {
+			this.setState({
+				message: 'Username or Password Incorrect'
+			})
 		}
 	}
 	toggle = () => {
@@ -66,6 +79,8 @@ class LoginContainer extends Component {
 	}
     render(){
         return(
+        	<div>
+        	<h4>{this.state.message}</h4>
         	<Grid container columns={1} textAlign='center' vertical='middle' style={{height: '100%'}}>
         		<Grid.Column style={{maxWidth: 450}}>
         		{this.state.register ? 
@@ -96,6 +111,7 @@ class LoginContainer extends Component {
 	            	</Segment>}
             	</Grid.Column>
            </Grid>
+           </div>
         )
     }
 }

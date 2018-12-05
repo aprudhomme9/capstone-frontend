@@ -143,6 +143,17 @@ class DisplayMovie extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
+		const numberAdds = parsedMovie.data.adds + 1;
+		const updatedMovie = await fetch(serverUrl + 'api/movies/movie/' + this.props.movie._id, {
+			method: 'PUT',
+			credentials: 'include',
+			body: JSON.stringify({
+				adds: numberAdds
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
 		}
 		
 		this.props.toggleView();

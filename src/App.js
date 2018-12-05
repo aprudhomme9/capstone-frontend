@@ -142,7 +142,7 @@ class App extends Component {
     console.log(this.state, '<---STATE');
     return (
       <div className="App">
-        <Header movie={this.state.movie} getResults={this.getResults} toggle={this.toggle} loggedIn={this.state.loggedIn} activeItem={this.state.activeItem} handleClick={this.handleClick}/>
+        <Header user={this.state.user} movie={this.state.movie} getResults={this.getResults} toggle={this.toggle} loggedIn={this.state.loggedIn} activeItem={this.state.activeItem} handleClick={this.handleClick}/>
 
         {this.state.activeItem === 'Home' && this.state.movie && this.state.search ? <MovieContainer user={this.state.user} movies={this.state.movies} /> : 
 
@@ -156,7 +156,7 @@ class App extends Component {
 
         this.state.activeItem === 'Movie Buds' ? <FriendContainer user={this.state.user}/> : 
 
-        this.state.activeItem === 'Inbox' ? <InboxContainer user={this.state.user}/> :
+        this.state.activeItem === 'Inbox' ? <InboxContainer loggedIn={this.state.loggedIn} user={this.state.user}/> :
 
         this.state.activeItem === 'Login' ? <LoginContainer handleGlobalState={this.handleGlobalState}/> :
 

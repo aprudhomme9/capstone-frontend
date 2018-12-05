@@ -2,13 +2,16 @@ import React, {Component} from 'react';
 import {Menu, Item, Button, Input, Radio, Segment, Form} from 'semantic-ui-react';
 import SearchContainer from '../SearchContainer';
 import './styles.css'
+
+const serverUrl = 'http://localhost:5000/'
 class Header extends Component{
 	constructor(){
 		super()
 		this.state = {
 			search: '',
 			loggedIn: false,
-			view: 'Movie View'
+			view: 'Movie View',
+			user: ''
 		}
 	}
 	handleChange = (e) => {
@@ -26,12 +29,26 @@ class Header extends Component{
 		e.preventDefault();
 		this.props.getResults(this.state.search);
 	}
+	fetchUser = async () => {
+		const user = await fetch(serverUrl + 'api/users', {credentials: 'include'});
+		const parsedUser = await user.json();
+		return parsedUser
+	}
+	componentDidMount(){
+		this.fetchUser().then((user) => {
+			this.setState({
+				user: user.data
+			})
+		})
+	}
 	render(){
+		let inboxIcon = <i class="envelope outline icon"></i>
 		if(this.state.loggedIn){
 			const message = 'Log Out'
 		} else {
 			const message = 'Log In/Register'
 		}
+		console.log(this.state.loggedIn, '<---LOGGED');
 		return(
 				<div>
 					<Segment inverted>
@@ -41,6 +58,16 @@ class Header extends Component{
 						<Menu.Item name='movie buds' active={this.props.activeItem == 'Movie Buds'} onClick={this.props.handleClick.bind()}/>
 						<Menu.Item name='groups' active={this.props.activeItem == 'Groups'} onClick={this.props.handleClick.bind()}/>
 						<Menu.Item name='inbox' active={this.props.activeItem == 'Inbox'} onClick={this.props.handleClick.bind()}/>
+						{this.props.user ? 
+							<div>
+							{inboxIcon}
+							<p>{this.state.user.recommendations.length}</p>
+							</div> :
+							<div>
+						{inboxIcon}
+						</div>
+
+						}
 						<Menu.Menu position='right'>
 							<Menu.Item>
 								<Radio toggle onChange={this.props.toggle.bind()}/>

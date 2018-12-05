@@ -8,8 +8,11 @@ class DisplayMovie extends Component{
 		super()
 		this.state = {
 			open: false,
+			recOpen: false,
+			users: [],
 			groups: [],
-			groupId: ''
+			groupId: '',
+			userId: ''
 		}
 	}
 	handleChange = (e, data) => {
@@ -26,9 +29,60 @@ class DisplayMovie extends Component{
 		})
 
 	}
+	handleRecChange = (e, data) => {
+		e.preventDefault();
+		const option = data.options.filter((option) => {
+			return option.value === data.value
+		})
+		const userId = option[0].key;
+		this.setState({
+			userId: userId
+		})
+	}
+	handleRecSubmit = async () => {
+		console.log('HANDLINGGGGGGGGGGGGG');
+		this.toggleRecModal();
+		this.props.toggleView();
+		const movieToAdd = this.props.movie;
+
+		const activeUser = this.props.user.username;
+		const userToEdit = await fetch(serverUrl + 'api/users/' + this.state.userId, {credentials: 'include'});
+
+		const parsedUser = await userToEdit.json();
+		console.log(parsedUser.data, '<---USER TO EDIT');
+		console.log(movieToAdd.title, '<-----MOVIE TO ADD');
+		const createdRec = await fetch(serverUrl + 'api/recs', {
+			method: 'POST',
+			body: JSON.stringify({
+				movieTitle: movieToAdd.title,
+				author: activeUser,
+				type: 'movie'
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+
+		const parsedRec = await createdRec.json();
+		const recArray = parsedUser.data.recommendations;
+		recArray.push(parsedRec.data);
+		const editedUser = await fetch(serverUrl + 'api/users/' + this.state.userId, {
+			method: 'PUT',
+			credentials: 'include',
+			body: JSON.stringify({
+				recommendations: recArray
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		const parsedEditUser = await editedUser.json();
+		console.log(parsedEditUser.data.recommendations, '<----USER RECS');
+		
+
+	}
 	handleSubmit = async () => {
-		const movieToAdd = await fetch(serverUrl + 'api/movies/movie/add/' + this.props.movie._id);
-		const parsedMovie = await movieToAdd.json();
+		const movieToAdd = this.props.movie
 
 		const groupToEdit = await fetch(serverUrl + 'api/groups/' + this.state.groupId);
 		const parsedGroupToEdit = await groupToEdit.json();
@@ -36,11 +90,11 @@ class DisplayMovie extends Component{
 		const groupMovies = parsedGroupToEdit.data.popularMovies;
 
 		const newArray = groupMovies.filter((movie) => {
-			if(movie._id !== parsedMovie.data._id){
+			if(movie._id !== movieToAdd._id){
 				return movie
 			}
 		})
-		newArray.push(parsedMovie.data);
+		newArray.push(movieToAdd);
 		console.log(newArray, '<----NEW ARRAY');
 		const editGroup = await fetch(serverUrl + 'api/groups/' + this.state.groupId, {
 			method: 'PUT',
@@ -54,25 +108,30 @@ class DisplayMovie extends Component{
 		})
 		const parsedEditGroup = await editGroup.json();
 		console.log(parsedEditGroup.data);
-		this.closeModal();
+		this.toggleModal();
 		this.props.toggleView();
 	}
-	openModal = async (e) => {
-		e.preventDefault();
+	toggleRecModal = () => {
 		this.setState({
-			open: true
+			recOpen: !this.state.recOpen
+		})
+	}
+	
+	toggleModal = async (e) => {
+		this.setState({
+			open: !this.state.open
 		})
 
-	}
-	closeModal = async () => {
-		this.setState({
-			open: false
-		})
 	}
 	fetchGroups = async () => {
 		const allGroups = await fetch(serverUrl + 'api/groups');
 		const parsedGroups = await allGroups.json();
 		return parsedGroups
+	}
+	fetchUsers = async () => {
+		const allUsers = await fetch(serverUrl + 'api/users/all');
+		const parsedUsers = await allUsers.json();
+		return parsedUsers
 	}
 	addToFavorites = async (e) => {
 		if(this.props.user){
@@ -164,21 +223,36 @@ class DisplayMovie extends Component{
 				groups: groups.data
 			})
 		})
+		this.fetchUsers().then((users) => {
+			this.setState({
+				users: users.data
+			})
+		})
 	}
 	render(){
 		const groupOptions = this.state.groups.map((group) => {
 			return {key: group._id, value: group.name, text: group.name}
 
 		})
-
+		const userOptions = this.state.users.map((user) => {
+			return {key: user._id, value: user.username, text: user.username}
+		})
 		return(
 			<div>
 				<Modal open={this.state.open}>
 				<Header>Add to Group</Header>
 				<Modal.Content>
-					<p className="close" onClick={this.closeModal}>+</p>
+					<p className="close" onClick={this.toggleModal}>+</p>
 					<Dropdown onChange={this.handleChange} clearable fluid search selection placeholder='Select Group' fluid selection options={groupOptions}/>
 					<Button onClick={this.handleSubmit}>Submit</Button>
+				</Modal.Content>
+				</Modal>
+				<Modal open={this.state.recOpen}>
+				<Header>Select User</Header>
+				<Modal.Content>
+					<p className="close" onClick={this.toggleRecModal}>+</p>
+					<Dropdown onChange={this.handleRecChange} clearable fluid search selection placeholder='Select User' fluid selection options={userOptions}/>
+					<Button onClick={this.handleRecSubmit}>Submit</Button>
 				</Modal.Content>
 				</Modal>
 				<div className='card'>
@@ -200,7 +274,8 @@ class DisplayMovie extends Component{
  					<Button onClick={this.addToFavorites}>Favorite</Button>
  			
       				<Button onClick={this.addToWatchlist}>Add to Watchlist</Button>
-      				<Button onClick={this.openModal}>Add to Group</Button>	
+      				<Button onClick={this.toggleModal}>Add to Group</Button>
+      				<Button onClick={this.toggleRecModal}>Recommend</Button>	
       			</div>		
 			</div>
 

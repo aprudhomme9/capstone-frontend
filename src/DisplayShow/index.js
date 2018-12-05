@@ -11,10 +11,14 @@ class DisplayShow extends Component{
 		this.state = {
 			groups: [],
 			groupId: '',
-
+			recOpen: false,
+			open: false,
+			userId: '',
+			users: []
 		}
 
 	}
+
 	handleChange = (e, data) => {
 		e.preventDefault();
 		console.log(data);
@@ -27,6 +31,60 @@ class DisplayShow extends Component{
 		this.setState({
 			groupId: id
 		})
+
+	}
+	handleRecChange = (e, data) => {
+		e.preventDefault();
+		const option = data.options.filter((option) => {
+			return option.value === data.value
+		})
+		const userId = option[0].key;
+		this.setState({
+			userId: userId
+		})
+	}
+	handleRecSubmit = async () => {
+		console.log('HANDLINGGGGGGGGGGGGG');
+		
+			this.toggleRecModal();
+		this.props.toggleView();
+		const showToAdd = this.props.show;
+
+		const activeUser = this.props.user.username;
+		const userToEdit = await fetch(serverUrl + 'api/users/' + this.state.userId, {credentials: 'include'});
+
+		const parsedUser = await userToEdit.json();
+		
+		const createdRec = await fetch(serverUrl + 'api/showrecs', {
+			method: 'POST',
+			body: JSON.stringify({
+				showTitle: showToAdd.title,
+				author: activeUser
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+
+		const parsedRec = await createdRec.json();
+		console.log(parsedRec, '<---PARSED REC');
+		const recArray = parsedUser.data.showRecommendations;
+		recArray.push(parsedRec.data);
+		const editedUser = await fetch(serverUrl + 'api/users/' + this.state.userId, {
+			method: 'PUT',
+			credentials: 'include',
+			body: JSON.stringify({
+				showRecommendations: recArray
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		const parsedEditUser = await editedUser.json();
+		
+
+		
+		
 
 	}
 	handleSubmit = async () => {
@@ -61,6 +119,11 @@ class DisplayShow extends Component{
 		this.props.toggleView();
 		
 	}
+	toggleRecModal = () => {
+		this.setState({
+			recOpen: !this.state.recOpen
+		})
+	}
 	openModal = async (e) => {
 		e.preventDefault();
 		this.setState({
@@ -72,6 +135,11 @@ class DisplayShow extends Component{
 		this.setState({
 			open: false
 		})
+	}
+	fetchUsers = async () => {
+		const allUsers = await fetch(serverUrl + 'api/users/all');
+		const parsedUsers = await allUsers.json();
+		return parsedUsers
 	}
 	fetchGroups = async () => {
 		const allGroups = await fetch(serverUrl + 'api/groups');
@@ -170,14 +238,29 @@ class DisplayShow extends Component{
 				groups: groups.data
 			})
 		})
+		this.fetchUsers().then((users) => {
+			this.setState({
+				users: users.data
+			})
+		})
 	}
 	render(){
 		const groupOptions = this.state.groups.map((group) => {
 			return {key: group._id, value: group.name, text: group.name}
 
 		})
+		const userOptions = this.state.users.map((user) => {
+			return {key: user._id, value: user.username, text: user.username}
+		})
 		return(
 			<div>
+				<Modal open={this.state.recOpen}>
+				<Modal.Content>
+					<p className="close" onClick={this.toggleRecModal}>+</p>
+					<Dropdown onChange={this.handleRecChange} clearable fluid search selection placeholder='Select User' fluid selection options={userOptions} />
+					<Button onClick={this.handleRecSubmit}>Submit</Button>
+				</Modal.Content>
+				</Modal>
 				<Modal open={this.state.open}>
 				<Header>Add to Group</Header>
 				<Modal.Content>
@@ -204,7 +287,8 @@ class DisplayShow extends Component{
  				<Button onClick={this.addToFavorites}>Favorite</Button>
  			
       			<Button onClick={this.addToWatchlist}>Add to Watchlist</Button>
-      			<Button onClick={this.openModal}>Add to Group</Button>		
+      			<Button onClick={this.openModal}>Add to Group</Button>
+      			<Button onClick={this.toggleRecModal}>Recommend</Button>		
       			</div>	
 			</div>
 

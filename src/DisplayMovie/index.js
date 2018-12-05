@@ -41,7 +41,8 @@ class DisplayMovie extends Component{
 	}
 	handleRecSubmit = async () => {
 		console.log('HANDLINGGGGGGGGGGGGG');
-		this.toggleRecModal();
+		if(this.props.user){
+			this.toggleRecModal();
 		this.props.toggleView();
 		const movieToAdd = this.props.movie;
 
@@ -77,7 +78,9 @@ class DisplayMovie extends Component{
 			}
 		})
 		const parsedEditUser = await editedUser.json();
-		console.log(parsedEditUser.data.recommendations, '<----USER RECS');
+		
+		}
+		
 		
 
 	}

@@ -47,6 +47,9 @@ class Header extends Component{
 		if(this.props.user){
 			this.props.user.recommendations.forEach(() => {
 			number += 1;
+			this.props.user.showRecommendations.forEach(() => {
+			number += 1;
+			})
 		})
 		}
 		

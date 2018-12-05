@@ -46,11 +46,11 @@ class MovieContainer extends Component {
 				
 				<Modal.Content>
 					<p className="close" onClick={this.closeModal}>+</p>
-					<DisplayMovie toggleView={this.closeModal} user={this.state.activeUser} movie={this.state.movieToDisplay} />
+					<DisplayMovie handleGlobalState={this.props.handleGlobalState} toggleView={this.closeModal} user={this.state.activeUser} movie={this.state.movieToDisplay} />
 				</Modal.Content>
-				</Modal>
+			</Modal>
 
-					<MovieList toggleView={this.toggleView} movies={this.props.movies}/>	
+				<MovieList toggleView={this.toggleView} movies={this.props.movies}/>	
 
 			</div>
 

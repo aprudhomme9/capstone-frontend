@@ -144,7 +144,7 @@ class App extends Component {
       <div className="App">
         <Header user={this.state.user} movie={this.state.movie} getResults={this.getResults} toggle={this.toggle} loggedIn={this.state.loggedIn} activeItem={this.state.activeItem} handleClick={this.handleClick}/>
 
-        {this.state.activeItem === 'Home' && this.state.movie && this.state.search ? <MovieContainer user={this.state.user} movies={this.state.movies} /> : 
+        {this.state.activeItem === 'Home' && this.state.movie && this.state.search ? <MovieContainer handleGlobalState={this.handleGlobalState} user={this.state.user} movies={this.state.movies} /> : 
 
         this.state.activeItem ==='Home' && !this.state.movie && this.state.search ? <ShowContainer user={this.state.user} shows={this.state.shows} /> : 
 
@@ -156,7 +156,7 @@ class App extends Component {
 
         this.state.activeItem === 'Movie Buds' ? <FriendContainer user={this.state.user}/> : 
 
-        this.state.activeItem === 'Inbox' ? <InboxContainer loggedIn={this.state.loggedIn} user={this.state.user}/> :
+        this.state.activeItem === 'Inbox' ? <InboxContainer loggedIn={this.state.loggedIn} handleGlobalState={this.handleGlobalState} user={this.state.user}/> :
 
         this.state.activeItem === 'Login' ? <LoginContainer handleGlobalState={this.handleGlobalState}/> :
 

@@ -56,7 +56,7 @@ class FriendContainer extends Component{
 			const favorites = 'Favorites: ' + (user.favoriteShows.length + user.favoriteMovies.length);
 			return(
 				<Card id={user._id} onClick={this.handleClick}
-    				image='https://www.mashtraxx.com/static/images/generic-user.png'
+    				image='https://lh3.googleusercontent.com/-Ed8ZwjFAJas/AAAAAAAAAAI/AAAAAAAACOo/xrjzkA-G3nQ/photo.jpg?sz=162'
     				header={user.username}
     				meta='Friend'
     				description={favorites}

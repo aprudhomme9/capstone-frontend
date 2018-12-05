@@ -22,15 +22,15 @@ class GroupDiscussion extends Component{
 		e.preventDefault();
 		console.log(e.currentTarget.id, '<--HERES TARGET ID');
 		const id = e.currentTarget.id
-		const commentToEdit = await fetch(serverUrl + 'api/comments/' + e.currentTarget.id);
-		const parsedComment = await commentToEdit.json();
-		console.log(parsedComment.data._id);
-		const newLikes = parsedComment.data.likes + 1;
+		const commentToEdit = this.state.comments.find((comment) => {
+			return comment._id === e.currentTarget.id
+		})
+		console.log(commentToEdit.likes, '<---comment likes');
 
-		const editComment = await fetch(serverUrl + 'api/comments/' + parsedComment.data._id, {
+		const editComment = await fetch(serverUrl + 'api/comments/' + commentToEdit._id, {
 			method: 'PUT',
 			body: JSON.stringify({
-				likes: newLikes
+				likes: commentToEdit.likes + 1
 			}),
 			headers: {
 				'Content-Type': 'application/json'
@@ -45,6 +45,10 @@ class GroupDiscussion extends Component{
 			})
 		commentArray.push(parsedEditedComment.data);
 
+		commentArray.sort((a,b) => {
+			return b.timeStamp - a.timeStamp
+		})
+
 		const editedGroup = await fetch(serverUrl + 'api/groups/' + this.props.group._id, {
 			method: 'PUT',
 			body: JSON.stringify({
@@ -54,10 +58,10 @@ class GroupDiscussion extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
-		this.fetchComments().then((comments) => {
-			this.setState({
-				comments: comments
-			})
+		const parsedEditedGroup = await editedGroup.json();
+		const newComments = parsedEditedGroup.data.discussion;
+		this.setState({
+			comments: newComments
 		})
 
 	}
@@ -102,10 +106,9 @@ class GroupDiscussion extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
-		this.fetchComments().then((comments) => {
-			this.setState({
-				comments: comments
-			})
+		this.setState({
+			comments: commentArray,
+			commentBody: ''
 		})
 
 	}
@@ -120,15 +123,19 @@ class GroupDiscussion extends Component{
 		
 		const discussionComments = this.state.comments.map((comment) => {
 			return(
-				<Comment.Content>
-        			<Comment.Author>{comment.author}</Comment.Author>
+				<Comment>
+				<Comment.Avatar src='https://lh3.googleusercontent.com/-Ed8ZwjFAJas/AAAAAAAAAAI/AAAAAAAACOo/xrjzkA-G3nQ/photo.jpg?sz=162' />
+      				<Comment.Content>
+       				<Comment.Author as='a'>{comment.author}</Comment.Author>
         			<Comment.Metadata>
-         			<div>{comment.timeStamp}</div>
-         			<div>
-           				<Icon id={comment._id} onClick={this.handleLike} name='star' />
+         			 <div>{comment.timeStamp}</div>
+       				 </Comment.Metadata>
+       				 <Comment.Metadata>
+       				 <div>
+           				<Icon id={comment._id} name='star' />
             				{comment.likes} likes
-          			</div>
-        			</Comment.Metadata>
+          				</div>
+       				 </Comment.Metadata>
         			<Comment.Text>
          				<p>{comment.body}</p>
         			</Comment.Text>
@@ -136,17 +143,19 @@ class GroupDiscussion extends Component{
           				<Comment.Action>Reply</Comment.Action>
         			</Comment.Actions>
       			</Comment.Content>
+      			</Comment>
 				)
 		})
 		return(
 			 <Comment.Group>
+
     			<Header as='h3' dividing>
       				Discussion
    				</Header>
 
-   				 <Comment>
+   				 
      				{discussionComments}
-   				 </Comment>
+   				 
    			
 
     			<Form onSubmit={this.handleComment} reply>

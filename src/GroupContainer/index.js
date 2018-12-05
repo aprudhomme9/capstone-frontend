@@ -29,6 +29,12 @@ class GroupContainer extends Component{
 		})
 		
 	}
+	handleBack = () => {
+		console.log('CLICKING');
+		this.setState({
+			displayGroup: false
+		})
+	}
 	handleSubmit = async (groupName) => {
 		const groupToCreate = await fetch(serverUrl + 'api/groups', {
 			method: 'POST',
@@ -121,7 +127,7 @@ class GroupContainer extends Component{
 			<Grid>
 				<Grid.Row>
 					<Grid.Column width={16}>
-						<GroupMeta handleJoin={this.handleJoin} group={this.state.groupToDisplay} />
+						<GroupMeta handleBack={this.handleBack} handleJoin={this.handleJoin} group={this.state.groupToDisplay} />
 					</Grid.Column>
 				</Grid.Row>
 				<Grid.Row>

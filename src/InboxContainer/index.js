@@ -6,7 +6,11 @@ class InboxContainer extends Component{
 	}
 	render(){
 		return(
-			<h1>Inbox</h1>
+			<div>
+				<h1>Inbox</h1>
+				<h4>COMING SOON</h4>
+			</div>
+			
 			)
 	}
 }

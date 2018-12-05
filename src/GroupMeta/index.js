@@ -11,14 +11,19 @@ class GroupMeta extends Component{
 	handleJoin = () => {
 		this.props.handleJoin();
 	}
-
+	handleBack = () => {
+		console.log('hitting');
+		this.props.handleBack();
+	}
 	render(){
 		console.log(this.props);
 		return(
 			<div>
-
 			<Grid>
 				<Grid.Row>
+					<Grid.Column width={16}>
+						<p onClick={this.handleBack} className='close'>+</p>
+					</Grid.Column>
 					<Grid.Column width={2}>
 						<Button color="blue" onClick={this.handleJoin}><Icon name='user'/>Join</Button>
 					</Grid.Column>

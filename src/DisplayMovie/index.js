@@ -111,6 +111,7 @@ class DisplayMovie extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
+		this.props.toggleView();
 	}
 	addToWatchlist = async (e) => {
 		e.preventDefault();
@@ -138,7 +139,7 @@ class DisplayMovie extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
-
+		this.props.toggleView();
 	}
 	componentDidMount(){
 		this.fetchGroups().then((groups) => {

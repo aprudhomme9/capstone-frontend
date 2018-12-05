@@ -116,6 +116,7 @@ class DisplayShow extends Component{
 				'Content-Type': 'application/json'
 			}
 		})
+		this.props.toggleView();
 	}
 	addToWatchlist = async (e) => {
 		e.preventDefault();
@@ -143,6 +144,7 @@ class DisplayShow extends Component{
 			}
 		})
 		// console.log(updatedUser.data);
+		this.props.toggleView();
 	}
 	componentDidMount(){
 		this.fetchGroups().then((groups) => {

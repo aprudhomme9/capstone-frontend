@@ -23,7 +23,7 @@ class InboxContainer extends Component{
 	}
 	markRead = async (e) => {
 		console.log(e.currentTarget.id, "<----CURRENT TARGET");
-		const newUserRecArray = this.props.user.recommendations.filter((rec) => {
+		const newUserRecArray = this.state.recs.filter((rec) => {
 			if(rec.movie._id !== e.currentTarget.id){
 				return rec
 			}
@@ -50,34 +50,39 @@ class InboxContainer extends Component{
 		if(this.props.loggedIn){
 			const userMovieRecommendations = this.state.recs.map((rec) => {
 			return (
-					<div>
-					<Card onClick={this.toggleView} id={rec.movie._id}>
-	   						<Image src={rec.movie.imageUrl} />
-	   						<Card.Content>
-	      						<Card.Header>{rec.movie.title}</Card.Header>
-	    					</Card.Content>
-	    					<Card.Content>
-	    						Recommended By: {rec.author}
-	    					</Card.Content>
-	    					<Button color='blue' id={rec.movie._id} onClick={this.markRead}>Mark Read</Button>
-	    					
-	 				</Card>
-	 				</div>
+					<Card id={rec.movie._id}>
+	   					<Image src={rec.movie.imageUrl} />
+	   					<Card.Content>
+	      					<Card.Header>{rec.movie.title}</Card.Header>
+	    				</Card.Content>
+	   					<Card.Content extra>
+	   						
+           					<p id={rec.movie._id} onClick={this.markRead} className='close2'>+</p>
+         					 
+         				</Card.Content>
+	 			</Card>
 	 				)
 		})
 		return(
 			<div>
 				<div>
 				<h1>Your Inbox</h1>
-				<Grid>
-				<Grid.Row textAlign='center'>
+				<Grid.Row>
 						<Grid.Column width={16}>
+							<h3>Recommended Movies</h3>
 							<Card.Group itemsPerRow={5}>
 							{userMovieRecommendations}
 							</Card.Group>
 						</Grid.Column>
-					</Grid.Row>
-				</Grid>
+				</Grid.Row>
+				<br/>
+				<Grid.Row>
+					<Grid.Column width={16}>
+							<h3>Recommended Shows</h3>
+							<Card.Group itemsPerRow={5}>
+							</Card.Group>
+					</Grid.Column>
+				</Grid.Row>
 				</div>
 			</div>
 			

@@ -43,12 +43,15 @@ class Header extends Component{
 	}
 	render(){
 		let inboxIcon = <i class="envelope outline icon"></i>
-		if(this.state.loggedIn){
-			const message = 'Log Out'
-		} else {
-			const message = 'Log In/Register'
+		let number = null;
+		if(this.props.user){
+			this.props.user.recommendations.forEach(() => {
+			number += 1;
+		})
 		}
-		console.log(this.state.loggedIn, '<---LOGGED');
+		
+
+		
 		return(
 				<div>
 					<Segment inverted>
@@ -61,7 +64,7 @@ class Header extends Component{
 						{this.props.user ? 
 							<div>
 							{inboxIcon}
-							<p>{this.state.user.recommendations.length}</p>
+							<p>{number}</p>
 							</div> :
 							<div>
 						{inboxIcon}

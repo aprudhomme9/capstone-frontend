@@ -36,19 +36,21 @@ class InboxContainer extends Component{
 		})
 
 	}
-	togggleShowModal = () => {
+	toggleShowModal = () => {
 		this.setState({
 			viewShow: !this.state.showModal
 		})
 	}
 	closeShowModal = () => {
 		this.setState({
-			viewShow: false
+			viewShow: false,
+			viewMovie: false
 		})
 	}
 	toggleModal = () => {
 		this.setState({
-			viewMovie: !this.state.viewMovie
+			viewMovie: !this.state.viewMovie,
+			viewShow: false
 		})
 	}
 	fetchRecs = async () => {
@@ -82,8 +84,8 @@ class InboxContainer extends Component{
 		const parsedUser = await updatedUser.json();
 
 		this.fetchRecs();
-		this.toggleModal();
-		this.props.handleGlobalState(true, parsedUser)
+		
+		// this.props.handleGlobalState(true, parsedUser)
 	}
 	markShowRead = async (e) => {
 		console.log(e.currentTarget.id, "<----CURRENT TARGET");
@@ -106,8 +108,8 @@ class InboxContainer extends Component{
 		const parsedUser = await updatedUser.json();
 
 		this.fetchRecs();
-		this.toggleModal();
-		this.props.handleGlobalState(true, parsedUser)
+		
+		// this.props.handleGlobalState(true, parsedUser)
 	}
 
 	componentDidMount(){
@@ -117,6 +119,7 @@ class InboxContainer extends Component{
 		if(this.props.loggedIn){
 			const userMovieRecommendations = this.state.recs.map((rec) => {
 			return (
+				<div>
 					<Card onClick={this.handleView} id={rec.movie._id}>
 	   					<Image src={rec.movie.imageUrl} />
 	   					<Card.Content>
@@ -124,14 +127,17 @@ class InboxContainer extends Component{
 	    				</Card.Content>
 	   					<Card.Content extra>
 	   						Recommended By: {rec.author}
-         					 <Button  id={rec.movie._id} onClick={this.markRead} color='blue'>Mark Read</Button>
+         					 
 	   						
          				</Card.Content>
 	 			</Card>
+	 			<Button  id={rec.movie._id} onClick={this.markRead} color='blue'>Mark Read</Button>
+	 			</div>
 	 				)
 		})
 			const userShowRecommendations = this.state.showRecs.map((rec) => {
 			return (
+				<div>
 					<Card onClick={this.handleShowView} id={rec.show._id}>
 	   					<Image src={rec.show.imageUrl} />
 	   					<Card.Content>
@@ -139,10 +145,12 @@ class InboxContainer extends Component{
 	    				</Card.Content>
 	   					<Card.Content extra>
 	   						Recommended By: {rec.author}
-         					 <Button  id={rec.show._id} onClick={this.markShowRead} color='blue'>Mark Read</Button>
+         					 
 	   						
          				</Card.Content>
 	 			</Card>
+	 			<Button  id={rec.show._id} onClick={this.markShowRead} color='blue'>Mark Read</Button>
+	 			</div>
 	 				)
 		})
 		return(

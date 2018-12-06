@@ -8,4 +8,4 @@ if(Object.keys(process.env).findIndex((key)=>key=='REACT_APP_DEPLOYED_VERSION') 
 	serverUrl = 'http://localhost:5000/'
 }
 
-export default serverUrl
+export default serverUrl;

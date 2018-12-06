@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Menu, Item, Button, Input, Radio, Segment, Form} from 'semantic-ui-react';
 import SearchContainer from '../SearchContainer';
 import './styles.css'
-
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'https://watch-with-friends-express.herokuapp.com/' || 'http://localhost:5000/'
 class Header extends Component{
 	constructor(){
 		super()

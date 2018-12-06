@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'http://localhost:5000/'
 
 
 class LogoutContainer extends Component{

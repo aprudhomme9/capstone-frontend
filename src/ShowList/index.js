@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Grid, Card, Image} from 'semantic-ui-react';
-const serverUrl = 'http://localhost:5000/'
+
+import serverUrl from '../apiUrl';
+// const serverUrl = 'http://localhost:5000/'
 
 class ShowList extends Component{
 	constructor(){

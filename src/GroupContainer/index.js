@@ -5,7 +5,8 @@ import GroupMembers from '../GroupMembers';
 import {Grid, Image, Button} from 'semantic-ui-react';
 import GroupMeta from '../GroupMeta';
 import GroupContent from '../GroupContent';
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'https://watch-with-friends-express.herokuapp.com/' || 'http://localhost:5000/'
 
 class GroupContainer extends Component{
 	constructor(){

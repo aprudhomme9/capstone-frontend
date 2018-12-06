@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Card, Group, Button, Icon, Modal, Header} from 'semantic-ui-react';
 import ProfileContainer from '../ProfileContainer';
-
-const serverUrl = 'http://localhost:5000/';
+import serverUrl from '../apiUrl';
+// const serverUrl = 'https://watch-with-friends-express.herokuapp.com/' || 'http://localhost:5000/'
 
 
 class GroupMembers extends Component{

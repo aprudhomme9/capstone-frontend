@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Modal, Header, Card, Grid, Image} from 'semantic-ui-react';
 import DisplayMovie from '../DisplayMovie';
 import DisplayShow from '../DisplayShow';
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'https://watch-with-friends-express.herokuapp.com/' || 'http://localhost:5000/'
 class GroupContent extends Component{
 	constructor(){
 		super()

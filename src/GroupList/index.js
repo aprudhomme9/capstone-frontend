@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Card, Group, Image, Modal, Label, Form, Header, Button, Grid} from 'semantic-ui-react';
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'https://watch-with-friends-express.herokuapp.com/' || 'http://localhost:5000/'
 class GroupList extends Component{
 	constructor(){
 		super()

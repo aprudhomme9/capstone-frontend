@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Label, Button, Input, Grid, Segment } from 'semantic-ui-react'
 
-
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'http://localhost:5000/'
 
 
 class LoginContainer extends Component {

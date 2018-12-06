@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Button, Card, Image, Grid, Modal, Header, Dropdown} from 'semantic-ui-react';
 import './styles.css';
-
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'https://watch-with-friends-express.herokuapp.com/' || 'http://localhost:5000/'
 class DisplayMovie extends Component{
 	constructor(){
 		super()
@@ -78,7 +78,7 @@ class DisplayMovie extends Component{
 			}
 		})
 		const parsedEditUser = await editedUser.json();
-		
+
 		}
 		
 		

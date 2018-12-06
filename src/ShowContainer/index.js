@@ -6,7 +6,8 @@ import ShowList from '../ShowList';
 import DisplayShow from '../DisplayShow';
 import {Modal, Button} from 'semantic-ui-react';
 
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'http://localhost:5000/'
 class ShowContainer extends Component {
 	constructor(){
 		super();

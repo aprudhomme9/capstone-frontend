@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Modal, Grid, Row, Column, Card, Group, Image} from 'semantic-ui-react';
 import DisplayMovie from '../DisplayMovie';
 import DisplayShow from '../DisplayShow';
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'http://localhost:5000/'
 
 class HomeContainer extends Component{
 	constructor(){

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Icon, Comment, Header, Metadata, Text, Actions, Avatar, Form, Button} from 'semantic-ui-react';
 
-
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'https://watch-with-friends-express.herokuapp.com/' || 'http://localhost:5000/'
 class GroupDiscussion extends Component{
 	constructor(){
 		super()

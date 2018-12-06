@@ -3,7 +3,9 @@ import SearchContainer from '../SearchContainer';
 import MovieList from '../MovieList';
 import DisplayMovie from '../DisplayMovie';
 import {Modal, Header, Button} from 'semantic-ui-react'
-const serverUrl = 'http://localhost:5000/'
+
+import serverUrl from '../apiUrl';
+// const serverUrl = 'http://localhost:5000/'
 
 
 class MovieContainer extends Component {

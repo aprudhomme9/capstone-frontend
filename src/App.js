@@ -11,8 +11,8 @@ import ShowContainer from './ShowContainer';
 import LoginContainer from './LoginContainer';
 import LogoutContainer from './LogoutContainer';
 import HomeContainer from './HomeContainer';
-
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from './apiUrl';
+// const serverUrl = 'http://localhost:5000/'
 
 class App extends Component {
   constructor(){

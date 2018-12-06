@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Card, Group, Image, Icon} from 'semantic-ui-react';
 import ProfileContainer from '../ProfileContainer';
-
-const serverUrl = 'http://localhost:5000/'
+import serverUrl from '../apiUrl';
+// const serverUrl = 'https://watch-with-friends-express.herokuapp.com/' || 'http://localhost:5000/'
 
 class FriendContainer extends Component{
 	constructor(){

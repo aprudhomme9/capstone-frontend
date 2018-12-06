@@ -3,7 +3,8 @@ import DisplayMovie from '../DisplayMovie';
 import DisplayShow from '../DisplayShow';
 import {Modal, Card, Group, Image, Grid, Column, Row, Button} from 'semantic-ui-react';
 
-const serverUrl = 'http://localhost:5000/';
+import serverUrl from '../apiUrl';
+// const serverUrl = 'http://localhost:5000/';
 
 
 class ProfileContainer extends Component{

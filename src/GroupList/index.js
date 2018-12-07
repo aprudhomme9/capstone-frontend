@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Card, Group, Image, Modal, Label, Form, Header, Button, Grid} from 'semantic-ui-react';
-import serverUrl from '../apiUrl';
-// const serverUrl = 'https://watch-with-friends-express.herokuapp.com/' || 'http://localhost:5000/'
+// import serverUrl from '../apiUrl';
+const serverUrl ='http://localhost:5000/'
 class GroupList extends Component{
 	constructor(){
 		super()
@@ -19,6 +19,8 @@ class GroupList extends Component{
 		this.props.openModal();
 	}
 	handleSubmit = () => {
+		console.log('SUBMIT IS HITTING');
+		console.log(this.state.groupName, '<-----GROUP NAME');
 		this.props.handleSubmit(this.state.groupName);
 	}
 	closeModal = () => {

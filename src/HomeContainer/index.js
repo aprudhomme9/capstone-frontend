@@ -129,7 +129,9 @@ class HomeContainer extends Component{
 					<DisplayShow toggleView={this.passBack} user={this.state.activeUser} show={this.state.showToPass} />
 				</Modal.Content>
 				</Modal>
+				<h1>Watch With Friends</h1>
 			<Grid>
+
 					<Grid.Row textAlign='center'>
 						<Grid.Column width={16}>
 							<h3>Popular Movies</h3>

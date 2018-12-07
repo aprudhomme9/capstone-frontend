@@ -37,6 +37,7 @@ class GroupContainer extends Component{
 		})
 	}
 	handleSubmit = async (groupName) => {
+		console.log(groupName, '<-----PASSING THROUGH');
 		const groupToCreate = await fetch(serverUrl + 'api/groups', {
 			method: 'POST',
 			body: JSON.stringify({

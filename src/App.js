@@ -139,7 +139,7 @@ class App extends Component {
   // activeItem options --> Home, My Profile, Movie Buds, Groups, Inbox, Login, Logout
   // Passing down a ridiculous amount of props. App handling all important global state
   render() {
-    console.log(this.state, '<---STATE');
+
     return (
       <div className="App">
         <Header user={this.state.user} movie={this.state.movie} getResults={this.getResults} toggle={this.toggle} loggedIn={this.state.loggedIn} activeItem={this.state.activeItem} handleClick={this.handleClick}/>

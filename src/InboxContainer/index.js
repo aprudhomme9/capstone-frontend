@@ -30,7 +30,7 @@ class InboxContainer extends Component{
 	handleShowView = async (e) => {
 		const show = await fetch(serverUrl + 'api/shows/show/add/' + e.currentTarget.id)
 			const parsedShow = await show.json();
-		this.togggleShowModal();
+		this.toggleShowModal();
 		this.setState({
 			showToPass: parsedShow.data
 		})

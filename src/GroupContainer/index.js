@@ -36,6 +36,7 @@ class GroupContainer extends Component{
 			displayGroup: false
 		})
 	}
+	// Handles group creation through modal
 	handleSubmit = async (groupName) => {
 		console.log(groupName, '<-----PASSING THROUGH');
 		const groupToCreate = await fetch(serverUrl + 'api/groups', {
@@ -96,11 +97,13 @@ class GroupContainer extends Component{
 
 		return parsedGroups
 	}
+	// grabbing group to display after user clicks that group
 	fetchDisplayGroup = async (id) => {
 		const groupToDisplay = await fetch(serverUrl + 'api/groups/' + id);
 		const parsedGroupToDisplay = await groupToDisplay.json();
 		return parsedGroupToDisplay
 	}
+	// toggles when necessary between single group and grouplist pages
 	toggleView = (id) => {
 		const groupId = id;
 		this.fetchDisplayGroup(groupId).then((group) => {

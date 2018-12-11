@@ -12,7 +12,7 @@ import LoginContainer from './LoginContainer';
 import LogoutContainer from './LogoutContainer';
 import HomeContainer from './HomeContainer';
 import serverUrl from './apiUrl';
-// const serverUrl = 'http://localhost:5000/'
+
 
 class App extends Component {
   constructor(){
@@ -36,7 +36,7 @@ class App extends Component {
     })
     // if !loggedIn
     this.fetchUser().then((user) => {
-      console.log(user.data, '<--------USER DATA');
+
       this.setState({
         user: user.data
       })
@@ -45,7 +45,7 @@ class App extends Component {
   fetchUser = async () => {
     try {
        const activeUser = await fetch(serverUrl + 'auth', {credentials: 'include'});
-       console.log(activeUser, '<---ACTIVE USER');
+
        if(activeUser.status === 200) {
         const parsedUser = activeUser.json();
         console.log(parsedUser, '<----PARSED USER');
@@ -75,9 +75,11 @@ class App extends Component {
       const shows = await fetch(serverUrl + 'api/shows/' + search, {
         credentials: 'include'
       })
+
       if(shows !== undefined) {
+
         const parsedShows = await shows.json();
-        console.log(parsedShows, '<----parsed shows');
+
         return parsedShows
       } else {
 
@@ -88,6 +90,8 @@ class App extends Component {
     
 
   }
+  // Returns search results for either movies or shows depending on state
+  // Which is altered by the toggle radio in nav bar
   getResults = async (search) => {
     const query = search;
     if(this.state.movie){
@@ -113,7 +117,7 @@ class App extends Component {
     }
     
   }
-
+  // Sets state via active item in navbar
   handleClick = (e) => {
     this.setState({
       activeItem: e.currentTarget.text
@@ -125,7 +129,7 @@ class App extends Component {
     }
   }
   toggle = () => {
-    console.log('TOGGLE');
+
     this.setState({
       movie: !this.state.movie
     })

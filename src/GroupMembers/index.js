@@ -34,6 +34,9 @@ class GroupMembers extends Component{
 			})
 		})
 	}
+	// componentDidMount(){
+	// 	this.fetchTargetUser
+	// }
 	render(){
 		console.log(this.props.group, "<---GROUP FROM PROPS");
 		const extra = (
@@ -46,6 +49,7 @@ class GroupMembers extends Component{
 		
 		const userList = this.props.group.members.map((user) => {
 			if(user){
+			console.log(user, '<---USER');
 			const favorites = 'Favorites: ' + (user.favoriteShows.length + user.favoriteMovies.length);
 			return (
 				<Card id={user._id} onClick={this.handleClick}

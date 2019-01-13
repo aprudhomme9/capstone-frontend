@@ -11,7 +11,8 @@ class Header extends Component{
 			search: '',
 			loggedIn: false,
 			view: 'Movie View',
-			user: ''
+			user: '',
+			number: null
 		}
 	}
 	handleChange = (e) => {
@@ -36,6 +37,7 @@ class Header extends Component{
 	}
 	componentDidMount(){
 		this.fetchUser().then((user) => {
+
 			this.setState({
 				user: user.data
 			})
@@ -43,16 +45,21 @@ class Header extends Component{
 	}
 	render(){
 		let inboxIcon = <i class="envelope outline icon"></i>
-		let number = null;
-		if(this.props.user){
-			this.props.user.recommendations.forEach(() => {
-				number += 1;
+		
+		// let number = this.props.user.recommendations.length + this.props.user.showRecommendations.length;
+		// console.log(number, '<---HERE IS NUMBER');
+
+		// if(this.props.user){
+		// 	console.log(this.props.user.recommendations.length, '<--LENGTH');
+		// 	console.log(this.props.user.recommendations.length, '<---SHOW LENGTH');
+		// 	this.props.user.recommendations.forEach(() => {
+		// 		number += 1;
 				
-			this.props.user.showRecommendations.forEach(() => {
-				number += 1;
-			})
-		})
-		}
+		// 	this.props.user.showRecommendations.forEach(() => {
+		// 		number += 1;
+		// 	})
+		// })
+		// }
 		
 
 		
@@ -68,7 +75,7 @@ class Header extends Component{
 						{this.props.user ? 
 							<div>
 							{inboxIcon}
-							<p>{number}</p>
+							<p>{this.props.user.recommendations.length + this.props.user.showRecommendations.length}</p>
 							</div> :
 							<div>
 						{inboxIcon}

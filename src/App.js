@@ -13,7 +13,7 @@ import LogoutContainer from './LogoutContainer';
 import HomeContainer from './HomeContainer';
 import serverUrl from './apiUrl';
 
-
+console.log(serverUrl, '<---SERVER URL');
 class App extends Component {
   constructor(){
     super()

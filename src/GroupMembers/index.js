@@ -35,7 +35,7 @@ class GroupMembers extends Component{
 		})
 	}
 	// componentDidMount(){
-	// 	this.fetchTargetUser
+	// 	this.setState({})
 	// }
 	render(){
 		console.log(this.props.group, "<---GROUP FROM PROPS");

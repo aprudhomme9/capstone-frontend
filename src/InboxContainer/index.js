@@ -29,7 +29,7 @@ class InboxContainer extends Component{
 	}
 	handleShowView = async (e) => {
 		const show = await fetch(serverUrl + 'api/shows/show/add/' + e.currentTarget.id)
-			const parsedShow = await show.json();
+		const parsedShow = await show.json();
 		this.toggleShowModal();
 		this.setState({
 			showToPass: parsedShow.data
@@ -148,8 +148,8 @@ class InboxContainer extends Component{
          					 
 	   						
          				</Card.Content>
-	 			</Card>
-	 			<Button  id={rec.show._id} onClick={this.markShowRead} color='blue'>Mark Read</Button>
+	 				</Card>
+	 				<Button  id={rec.show._id} onClick={this.markShowRead} color='blue'>Mark Read</Button>
 	 			</div>
 	 				)
 		})

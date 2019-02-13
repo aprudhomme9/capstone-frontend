@@ -19,7 +19,6 @@ class SearchContainer extends Component {
 		this.props.getResults(this.state.search);
 	}
 	render(){
-		console.log(this.state.search);
 		const message = 'Search ' + this.props.placeholder + ' here...';
 		return(
 
@@ -28,11 +27,9 @@ class SearchContainer extends Component {
 					<Segment inverted>
           				<Input inverted icon='search' onChange={this.handleChange} type="text" value={this.state.search} name='search' placeholder={message}/>
           				<Button type="submit">Search</Button>
-          			</Segment>	
-
+          			</Segment>
       			</Form>
 			</div>
-
 		)
 	}
 }

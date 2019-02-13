@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Button, Grid, Icon, Modal, Header, Form, Label} from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Button, Grid, Icon, Modal, Header, Form, Label } from 'semantic-ui-react';
 
 class GroupMeta extends Component{
 	constructor(){
@@ -12,11 +12,9 @@ class GroupMeta extends Component{
 		this.props.handleJoin();
 	}
 	handleBack = () => {
-		console.log('hitting');
 		this.props.handleBack();
 	}
 	render(){
-		console.log(this.props);
 		return(
 			<div>
 			<Grid>
@@ -29,7 +27,6 @@ class GroupMeta extends Component{
 					</Grid.Column>
 					<Grid.Column width={16}>
 						<h3>{this.props.group.name}</h3>
-					
 					</Grid.Column>
 					
 				</Grid.Row>
